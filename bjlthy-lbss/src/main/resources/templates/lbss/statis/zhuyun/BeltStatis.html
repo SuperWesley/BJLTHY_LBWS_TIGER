@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>皮带秤煤量统计数据</title>
+	<link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{/js/plugins/bootstrap-3.4.1-dist/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/js/plugins/bootstrap-select-1.13.14/dist/css/bootstrap-select.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/templates/lbss/css/indexCom.css}" rel="stylesheet">
+    <link th:href="@{/templates/lbss/css/statis/BeltStatis.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <div class="top">
+        <div class="top-left left">
+            <div class="logo left"></div>
+            <div class="company left">
+                <div class="company_place">
+                    <div class="sparkSet" id="company_name" style="font-size:2.2rem;color: #63CDFF;cursor:pointer;">红柳林矿业有限公司</div>
+                </div>
+                <div style="width: 100%;height: 50%;">
+                    <div id="localtime" style="font-size:1.8rem;"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="top-middle left">
+            <div class="top-middle">
+                <input type="hidden" th:value="${belt_name}" id="belt_name"/>
+                <input type="hidden" th:value="${belt_name_en}" id="belt_name_en"/>
+            </div>
+            <div class="con-top">
+
+            </div>
+        </div>
+        <div class="top-middle2 left">
+            <div class="beltOrIronSet" style="cursor:pointer;" id="system_name">皮带秤煤量统计数据</div>
+        </div>
+        <div class="top-right left">
+            <div class="left" style="width: 100%;height: 100%;">
+            	<div class="left" style="width: 50%;height: 100%;margin-top: 2%;">
+                    <div class="col-sm-10">
+                        <select id="detail" class="selectpicker" data-width="180px" title="皮带秤煤量统计数据" onchange="queryDetailInfo();">
+                             <option value="实时">皮带秤实时数据</option>
+	                         <option value="皮带统计">皮带秤煤量统计数据</option>
+	                         <option value="皮带详细">皮带秤煤量详细数据</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="left" style="width: 30%;height: 100%;margin-top: 2%;">
+                    <div class="col-sm-10">
+                        <select id="manage" class="selectpicker" data-width="180px" title="管理" onchange="pageSwitch();">
+		                     <option value="后台">后台</option>
+		                     <option value="关闭">关闭</option>
+                        </select>
+                    </div>
+                </div>
+			
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="middle">
+        <div class="middle-top">
+
+        </div>
+        <div class="middle-bottom">
+            <div class="middle-bottom-left divBox">
+
+            </div>
+            <div class="middle-bottom-right divBox">
+
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <div class="bottom">
+        <div class="bottom-top">
+            <div class="bottom-top1">
+                <div class="title_div">
+                </div>
+                <div class="time_div">
+                    <span style="color: #00a4f1;font-size: 21px;margin-top: 51px">请输入起始时间：</span>
+                    <input type="text" class="time-input" placeholder="请选择当前时间" id="time" name="time" style="color: black;height: 30px;"/>
+                </div>
+                <div class="button_div">
+                    <a class="btn btn-primary" onclick="showScraperStatis(this,'D')">日统计</a>
+                    <a class="btn btn-primary" onclick="showScraperStatis(this,'W')">周统计</a>
+                    <a class="btn btn-primary" onclick="showScraperStatis(this,'M')">月统计</a>
+                    <a class="btn btn-primary" onclick="showScraperStatis(this,'Y')">年统计</a>
+                </div>
+            </div>
+            <div class="bottom-top2" style="background: transparent">
+                <table class="formTable" id="singlechip_datagrid">
+                    <tr class="datagrid-row">
+                        <th colspan="5" style=" text-align:center;font-size: 24px;color: #63CDFF;">皮带秤合计信息</th>
+                    </tr>
+                    <tr class="datagrid-row">
+                        <th class='datagrid' width="8%">日 期</th>
+                        <th class='datagrid' width="8%">总过煤重量(t)</th>
+                        <th class='datagrid' width="8%">总过煤体积(m<sup>3</sup>)</th>
+                        <th class='datagrid' width="7%">密 度(t/m<sup>3</sup>)</th>
+                        <th class='datagrid' width="7%">含矸率(%)</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="day" name="day" class='datagrid'></div>
+                        </td>
+
+                        <td>
+                            <div id="totalWeight" name="totalWeight" class='datagrid'></div>
+                        </td>
+                        <td>
+                            <div id="totalVolume" name="totalVolume" class='datagrid'></div>
+                        </td>
+                        <td>
+                            <div id="density" name="density" class='datagrid'></div>
+                        </td>
+                        <td>
+                            <div id="gangueRatio" name="gangueRatio" class='datagrid'></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="con-con"></div>
+        <div class="con-info">
+            <div style="width: 100%;height: 100%">
+                <div class="dataAllBorder01">
+                    <div class="dataAllBorder02">
+                        <div class="data_tit1">皮带秤详细信息</div>
+                        <p id="main" class="data_chart"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: echarts-js"/>
+<!-- 全局js -->
+<script type="text/javascript" th:src="@{/js/plugins/bootstrap-select-1.13.14/dist/js/bootstrap-select.min.js}"></script>
+<script type="text/javascript" th:src="@{/ajax/libs/datapicker/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/templates/lbss/js/echarts.min.js}"></script>
+<script th:src="@{/templates/lbss/js/reconnecting-websocket.js}"></script>
+<script th:src="@{/templates/lbss/js/public/indexDetail.js}"></script>
+<script th:src="@{/templates/lbss/js/public/times.js}"></script>
+<script th:src="@{/templates/lbss/js/public/dateUtil.js}"></script>
+<script th:src="@{/templates/lbss/js/statis/BeltStatis.js}"></script>
+</body>
+</html>

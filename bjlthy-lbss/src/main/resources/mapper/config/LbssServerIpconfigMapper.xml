@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.config.config.mapper.LbssServerIpconfigMapper">
+    
+    <resultMap type="LbssServerIpconfig" id="LbssServerIpconfigResult">
+        <result property="id"    column="id"    />
+        <result property="serverName"    column="server_name"    />
+        <result property="serverIp"    column="server_ip"    />
+    </resultMap>
+
+    <sql id="selectLbssServerIpconfigVo">
+        select id, server_name, server_ip from lbss_server_ipconfig
+    </sql>
+
+    <select id="selectLbssServerIpconfigList" parameterType="LbssServerIpconfig" resultMap="LbssServerIpconfigResult">
+        <include refid="selectLbssServerIpconfigVo"/>
+        <where>  
+            <if test="serverName != null  and serverName != ''"> and server_name like concat('%', #{serverName}, '%')</if>
+            <if test="serverIp != null  and serverIp != ''"> and server_ip = #{serverIp}</if>
+        </where>
+    </select>
+    
+    <select id="selectLbssServerIpconfigById" parameterType="Integer" resultMap="LbssServerIpconfigResult">
+        <include refid="selectLbssServerIpconfigVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLbssServerIpconfig" parameterType="LbssServerIpconfig">
+        insert into lbss_server_ipconfig
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="serverName != null and serverName != ''">server_name,</if>
+            <if test="serverIp != null and serverIp != ''">server_ip,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="serverName != null and serverName != ''">#{serverName},</if>
+            <if test="serverIp != null and serverIp != ''">#{serverIp},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLbssServerIpconfig" parameterType="LbssServerIpconfig">
+        update lbss_server_ipconfig
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serverName != null and serverName != ''">server_name = #{serverName},</if>
+            <if test="serverIp != null and serverIp != ''">server_ip = #{serverIp},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLbssServerIpconfigById" parameterType="Integer">
+        delete from lbss_server_ipconfig where id = #{id}
+    </delete>
+
+    <delete id="deleteLbssServerIpconfigByIds" parameterType="String">
+        delete from lbss_server_ipconfig where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

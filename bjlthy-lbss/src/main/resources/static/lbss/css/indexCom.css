@@ -1,0 +1,355 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: PingFangSC-Light, 微软雅黑;
+}
+
+.clear {
+    clear: both;
+}
+
+.left {
+    float: left;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: -Scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    background-repeat: repeat;
+    -webkit-font-feature-settings: 'kern' 1;
+    -moz-font-feature-settings: 'kern' 1;
+    -o-font-feature-settings: 'kern' 1;
+    text-rendering: geometricPrecision;
+    /*font-family: "Microsoft YaHei";*/
+}
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td,
+form,
+pre {
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    color: #333;
+}
+
+a:active,
+a:hover {
+    outline: 0
+}
+
+img {
+    display: inline-block;
+    border: none;
+    vertical-align: middle;
+}
+
+li {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+h1,
+h2,
+h3 {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+h4,
+h5,
+h6 {
+    font-size: 100%;
+    font-weight: 400;
+}
+
+button,
+input,
+select,
+textarea {
+    font-size: 100%;
+}
+
+input,
+button,
+textarea,
+select,
+optgroup,
+option {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    outline: 0;
+}
+
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+/** 滚动条 **/
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-button:vertical {
+    display: none;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+    background-color: rgba(14, 148, 234, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, .3);
+}
+
+::-webkit-scrollbar-thumb:vertical:hover {
+    background-color: rgba(0, 0, 0, .35);
+}
+
+::-webkit-scrollbar-thumb:vertical:active {
+    background-color: rgba(0, 0, 0, .38);
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #262626;
+    text-decoration: none;
+    background-color: #59beff;
+}
+
+/* ██████████████████████████  上部分  █████████████████████████████████████████████████████████████ */
+
+
+.container {
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/background.png);
+    background-size: 100% 100%;
+}
+
+.top {
+    width: 100%;
+    height: 10%;
+}
+
+.top-left {
+    width: 28%;
+    height: 100%;
+}
+
+.top-left .logo {
+    background-image: url(../img/kuang.png);
+    background-repeat: repeat;
+    background-size: 100% 100%;
+    width: 13%;
+    height: 65%;
+    margin-left: 3%;
+    margin-top: 3%;
+}
+
+.top-left .company {
+    width: 75%;
+    height: 100%;
+    margin-left: 2%;
+    margin-right: 5%;
+}
+
+.top-middle {
+    width: 10%;
+    height: 100%;
+}
+
+.top-middle2 {
+    width: 40%;
+    height: 100%;
+}
+
+.top-middle2 div {
+    font-size: 3.9rem;
+    color: #63CDFF;
+    font-weight: bold;
+    margin-top: 3%;
+}
+
+.top-middle input {
+    background-color: transparent;
+    border: none;
+    color: #63CDFF;
+    font-size: 1.4rem;
+    float: left;
+    width: 30%;
+    margin-top: 2%;
+}
+
+.top-right {
+    width: 20%;
+    height: 100%;
+}
+
+.top-right div:first-child div:first-child div, .caret {
+    color: white;
+}
+
+.admin_info {
+    height: 17%;
+    width: 10%;
+    float: left;
+    margin-top: 5%;
+    background-image: url(../img/realtime/user.png);
+    background-repeat: repeat;
+    background-size: 100% 100%;
+}
+
+.admin_off {
+    height: 17%;
+    width: 10%;
+    float: left;
+    margin-top: 6%;
+    position: relative;
+    background-image: url(../img/realtime/on-off.png);
+    background-repeat: repeat;
+    background-size: 100% 100%;
+}
+
+
+/* ██████████████████████████  页面上部分  显示css  █████████████████████████████████████████████████████████████ */
+
+.company_title {
+    font-size: 2.2rem;
+    color: #63CDFF;
+    cursor: pointer;
+}
+
+.company_place {
+    width: 100%;
+    height: 38%;
+    margin-top: 5%;
+}
+
+/* ██████████████████████████  底部状态灯 显示css  █████████████████████████████████████████████████████████████ */
+
+.stateFont {
+    width: 100%;
+    height: 30%;
+    text-align: center;
+    color: #63CDFF;
+    font-size: 20px;
+    margin-top: 1.3rem;
+}
+
+.stateImg {
+    width: 100%;
+    height: 30%;
+    color: #63CDFF;
+    float: left;
+    margin-top: 3%;
+    margin-left:40%;
+}
+
+.stateImg div {
+    text-align: center;
+    /* margin-left: 33%; */
+}
+
+.stateImg div img {
+    content: url(../img/realtime/redLight.png);
+    width: 1.6rem;
+    margin-top: -1.5%;
+}
+
+.stateImg div span {
+    color: #63CDFF;
+    /*color: #828898;*/
+    font-size: 18px;
+}
+
+/* ████████████████████████████████████████████████████████████████████████████████████████████████████████████████████ */
+
+.navbar-right .dropdown-menu {
+    right: 0;
+    left: 0;
+}
+
+.navbar-top-links li:last-child {
+    margin-right: 0px;
+    left: 0px;
+}
+
+.navbar-top-links .dropdown-menu li a {
+    padding-left: 15px;
+}
+
+.dropdown-menu {
+    top: 40px;
+}
+
+.user-menu a:first-child:focus {
+    background-color: transparent;
+}
+
+.btn-default {
+    background-color: #0d2346;
+    border-color: #fff;
+    color: #444;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
+    background-color: #0d2346;
+    border-color: #fff;
+    color: #444;
+}
+
+.btn-default:active:hover, .btn-default.active:hover, .open > .dropdown-toggle.btn-default:hover, .btn-default:active:focus, .btn-default.active:focus, .open > .dropdown-toggle.btn-default:focus, .btn-default:active.focus, .btn-default.active.focus, .open > .dropdown-toggle.btn-default.focus {
+    background-color: #0d2346;
+    border-color: #fff;
+    color: #444;
+}
+
+/* .selectpicker{
+	background-color: #0d2a58;
+	border:none;
+    border-color: #fff;
+    color: #fff;
+    width: 100%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    margin-top:8%;
+} */

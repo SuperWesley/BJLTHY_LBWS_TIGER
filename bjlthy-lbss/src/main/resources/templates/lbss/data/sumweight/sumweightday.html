@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('日累计重量列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label style="width:96px">皮带秤名称：</label>
+                                <select name="belt_name" id="belt_name" th:with="type=${@dict.getType('belt_name')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择时间" name="day"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:day:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:day:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:day:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:day:remove')}]];
+        var prefix = ctx + "lbss/data/sumweightDay";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "日累计重量",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '星期',
+                    visible: false
+                },
+                {
+                    field: 'belt_name',
+                    title: '皮带秤名称'
+                },
+                {
+                    field: 'day',
+                    title: '日期'
+                },
+                {
+                    field: 'totalVolume',
+                    title: '总过煤体积'
+                },
+                {
+                    field: 'totalWeight',
+                    title: '总过煤重量'
+                },
+                {
+                    field: 'density',
+                    title: '密度'
+                },
+                {
+                    field: 'gangueRatio',
+                    title: '含矸率'
+                },
+                {
+                    field: 'density',
+                    title: '采高'
+                },
+                {
+                    field: 'density',
+                    title: '掘进进尺'
+                },
+                {
+                    field: 'week',
+                    title: '星期'
+                },
+                {
+                    field: 'remark',
+                    title: '异常备注信息'
+                },
+                ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+*,ul,li,p,div,span{margin: 0;padding: 0}
+body{font-family:"Microsoft YaHei"}
+ul{list-style: none}
+.clear{clear: both}
+a{text-decoration: none}
+::-webkit-scrollbar-track{border-radius: 10px;-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0);}/*滚动条的滑轨背景颜色*/
+::-webkit-scrollbar-thumb{background-color: rgba(0,0,0,0.05);border-radius: 10px;-webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1);}/*滑块颜色*/
+::-webkit-scrollbar-thumb{background-color: rgba(0,0,0,0.2);border-radius: 10px;-webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1);}
+::-webkit-scrollbar{width: 16px;height: 16px;}/* 滑块整体设置*/
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb{border-radius: 999px;border: 5px solid transparent;}
+::-webkit-scrollbar-track{box-shadow: 1px 1px 5px rgba(0,0,0,.2) inset;}
+::-webkit-scrollbar-thumb{min-height: 20px;background-clip: content-box;box-shadow: 0 0 0 5px rgba(0,0,0,.2) inset;}
+::-webkit-scrollbar-corner{background: transparent;}/* 横向滚动条和纵向滚动条相交处尖角的颜色 */
+.l_left{
+    float: left;
+}
+.r_right{float: right}
+*{
+    font-size: 100%;
+}
+
+.inner{
+    height: 100%;
+}
+
+/*头部LOGO*/
+.logo_img{
+	float: left;
+	width: 25%;
+	height: 100%;
+}
+.logo{
+	margin-left: 1.5625em;
+	margin-top: 1%;
+	float: left;
+	width: 20%;
+	height: 90%;
+	background-image: url(../img/kuang.png);
+	background-repeat:no-repeat;
+	background-position:center center;
+}
+/*头部公司与时间部分*/
+.logo_content{
+	margin-left: 5%;
+	margin-top: 3%;
+	float: left;
+	width: 17vw;
+	height: 5vw;
+}
+.company{
+	color: #63CDFF;
+	text-indent: 0.3em;
+	font-size: 1.2vw;
+	
+}
+.nowtime{
+	color: #63CDFF;
+	text-indent: 0.3em;
+	font-size: 0.89vw;
+}
+/*统计信息*/
+.total_info{
+	float: left;
+	width: 23%;
+	height: 100%;
+}
+
+/*统计信息-按钮样式*/
+.button_style{
+	background-color:transparent;
+	border:none;
+	font-weight: bold;
+    color: #07d1ff;
+	font-size: 1.1vw;
+	float: left;
+	width: 20%;
+	margin-top:6%;
+	
+}
+
+/*头部系统标题*/
+.title{
+	position: relative;
+	float: left;
+	width: 55%;
+	font-size: 2.2vw;
+	font-weight: bold;
+	text-align: center;
+	line-height: 5.3vw;
+	letter-spacing: 20px;
+	color: #63CDFF;
+
+}
+/*头部控制部分*/
+.controller{
+	position: relative;
+	float: left;
+	width: 17%;
+	height: 100%;
+}
+/*头部控制部分管理平台*/
+.admin{
+	float: left;
+	width: 45%;
+	height: 100%;
+}
+.admin_img{
+	float: left;
+	margin-right: 5%;
+	width: 1.2vw;
+	height: 1vw;
+	background-image: url(../img/user.png);
+	background-repeat:no-repeat;
+}
+.admin_text{
+	float: left;
+	width: 70%;
+	height: 45%;
+	color: #0686D8;
+	font-size: 1.0vw;
+	font-weight: bold;
+	text-indent: 0.3125em;
+	border-right: 1px solid #0686D8;
+}
+/*头部控制部分返回按钮*/
+.goback{
+	float: right;
+	width: 45%;
+	height: 100%;
+}
+.goback_img{
+	float: left;
+	margin-top: 5%;
+	width: 1.2vw;
+	height: 2vw;
+	background-image: url(../img/on-off.png);
+	background-repeat:no-repeat;
+}
+.goback_text{
+	background-color:transparent;
+	border:none;
+	float: left;
+	width: 70%;
+	height: 96%;
+	color: #0686D8;
+	font-weight: bold;
+	font-size: 1.0vw;
+}
+
+/* 模块标题*/
+.module_title{
+	width: 100%;
+    height: 15%;
+    padding-top: 2%;
+    text-align: center;
+    text-indent: 0.7em;
+    font-size: 1.0vw;
+    font-weight: bold;
+    color: white;
+}
+/* 中间模块标题*/
+.cen_module_title{
+	width: 100%;
+    height: 4%;
+    padding-top: 2%;
+    text-align: center;
+    text-indent: 0.7em;
+    font-size: 1.0vw;
+    font-weight: bold;
+    color: white;
+}
+
+/* 左侧模块内容样式*/
+.left_top_content{
+	width: 100%;
+	height: 80%;
+}
+
+/* 中间模块内容样式*/
+.top_count_weight_echarts{
+	width: 100%;
+	height: 35%;
+}
+.top_count_weight_data{
+	width: 97%;
+	height: 10%;
+}
+/* 主体中部上部 - 重量实时数据*/
+.weightstyle{
+	margin-left: 15%;
+	width: 90%;
+	height: 80%;
+	color: #00EAFF;
+	text-align: center;
+	font-size: 1.00vw;
+	font-weight: bold;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	line-height: 2.1vw;
+	
+}
+
+.weight_line{
+	float: left;
+	width: 9%;
+	margin-top:1%;
+	height: 60%;
+	border-right: 2px dashed #04bcf3;
+}
+/* 主体中部上部 - 体积实时数据*/
+.top_count_volume_echarts{
+	width: 100%;
+	height: 35%;
+}
+.top_count_volume_data{
+	width: 88%;
+	height: 10%;
+	margin: auto;
+	border-bottom: 2px dashed #04bcf3;
+}
+/* 主体中部上部 - 体积实时数据*/
+.volumestyle{
+	float: left;
+	width: 100%;
+	height: 80%;
+	color: #00EAFF;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-size: 1.00vw;
+	font-weight: bold;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+}
+.volume_line{
+	float: left;
+	width: 9%;
+	height: 66%;
+	border-right: 2px dashed #04bcf3;
+}
+
+.volume_line1{
+	float: left;
+	width: 2%;
+	height: 66%;
+	border-right: 2px dashed #04bcf3;
+}
+.top_orther_data{
+	width: 88%;
+	height: 10%;
+	margin: auto;
+	margin-top:2%;
+	border-bottom: 2px solid #04bcf3;
+}
+.hunmei{
+	float: left;
+	width: 31%;
+	height: 65%;
+	color: #00EAFF;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-weight: bold;
+	font-size: 0.9vw;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+	
+}
+
+.songsan{
+	margin-left:2%;
+	float: left;
+	width: 31%;
+	height: 65%;
+	color: #00EAFF;
+	font-size: 0.45vw;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-weight: bold;
+	font-size: 0.9vw;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+	
+}
+
+.waste{
+	float: left;
+	margin-left: 2%;
+	width: 30%;
+	height: 65%;
+	color: #00EAFF;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-size: 0.9vw;
+	font-weight: bold;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+}
+.hourcocl{
+	float: left;
+	margin-left: 2%;
+	width: 35%;
+	height: 65%;
+	color: #00EAFF;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-size: 1.00vw;
+	font-weight: bold;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+}
+
+.right_bottom_title{
+	width: 100%;
+	height: 14%;
+	padding-top: 3%;
+	text-align: center;
+	font-size: 1.00vw;
+	font-weight: bold;
+    color: white;
+}
+.box_center_bottom_inner{
+	width: 95%;
+	height: 100%;
+	margin-top:1%;
+}
+/* 主体中部下部 - 包含盒子 - 激光雷达状态 */
+.inner_laser_state{
+	float: left;
+	width: 50%;
+	height: 80%;
+}
+.laser_content{
+	float: left;
+	width: 60%;
+	height: 100%;
+	margin-top: 5%;
+	text-align: center;
+	font-size: 1.00vw;
+	font-weight: bold;
+    color: #08deff;
+}
+.laser_state{
+	float: left;
+	width: 40%;
+	height: 100%;
+}
+.laser_yuan{
+	float: left;
+	margin-top: 18%;
+	color: #63CDFF;
+}
+
+/* 主体中部下部 - 包含盒子 - 皮带机状态 */
+.inner_belt_state{
+	float: left;
+	width: 50%;
+	height: 80%;
+}
+.belt_content{
+	float: left;
+	width: 60%;
+	height: 100%;
+	margin-top: 5%;
+	text-align: center;
+	font-size: 1.05vw;
+	font-weight: bold;
+    color: #08deff;
+}
+.belt_state{
+	float: left;
+	width: 40%;
+	height: 100%;
+}
+.belt_yuan{
+	float: left;
+	margin-top: 18%;
+	color: #63CDFF;
+}
+
+.breathe-lidar{ position:relative; width:16px; height:16px; top:5px;float:left;  border:1px solid #008000; border-radius:20px; color:#fff; font-size:10px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.3); overflow:hidden;
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#FF0000), to(#FF0000));
+}
+
+.breathe-belt{ position:relative; width:16px; height:16px; top:5px;float:left;   border:1px solid #008000; border-radius:20px; color:#fff; font-size:20px;  cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.3); overflow:hidden;
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#FF0000), to(#FF0000));
+}
+
+.rowstyle {
+	width:11%; 
+	line-height: 43px;
+	color:#ffffff; 
+	font-size:18px;
+	text-align:center;
+}
+
+
+.mainbutstyle {
+	width: 7%;
+	height: 80%;
+	float: left;
+	text-align:center;
+	font-size:19px;
+	margin-left: 2%;
+	line-height: 35px;
+	color:#fff;
+	background-image: url('../img/anniu.png');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	
+}
+.mainbutstyle:hover{
+    box-shadow: 2px 4px 6px #fff;
+    color: #00fff6;
+    font-weight: bold;
+}
+.inpBtu {
+	background-color:transparent;
+	border:1px solid #01f5f1;
+	color: #fff;
+	font-size: 0.9vw;
+	margin-left: 5%;
+	font-weight: bold;
+	width: 10%;
+	border-radius: 6px;
+}
+.inpBtu:hover{
+    box-shadow: 2px 4px 6px #fff;
+    color: #01f5f1;
+}
+.selectpicker{
+	background-color: #0d2a58;
+    border-color: #fff;
+    color: #fff;
+    width: 70%;
+    font-size: 0.8vw;
+    font-weight: bold;
+    height: 52%;
+    margin-top: 5%;
+    margin-left: 20%;
+}
+/*统计信息-按钮样式*/
+.button_style1{
+	background-color:transparent;
+	border:none;
+    color: #fff;
+	font-size: 0.8vw;
+	float: right;
+	height: 50px;
+	border-radius: 6px;
+	padding: 15px 15px;
+	font-weight: 600;
+	
+}
+
+.data-info {
+	width: 80%;
+	height: 50%;
+	color: #fff;
+	margin-left: 10%;
+	font-size: 0.8vw;
+	font-weight: bold;
+}

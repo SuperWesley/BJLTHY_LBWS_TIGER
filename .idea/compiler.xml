@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="bjlthy-system" />
+        <module name="bjlthy-quartz" />
+        <module name="bjlthy-framework" />
+        <module name="bjlthy-lbss" />
+        <module name="bjlthy-common" />
+        <module name="bjlthy-admin" />
+        <module name="bjlthy-generator" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bjlthy" options="-parameters --add-opens jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" />
+      <module name="bjlthy-admin" options="-parameters --add-opens jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" />
+      <module name="bjlthy-common" options="-parameters --add-opens jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" />
+      <module name="bjlthy-framework" options="-parameters --add-opens jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" />
+      <module name="bjlthy-generator" options="-parameters --add-opens jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" />
+      <module name="bjlthy-lbss" options="-parameters --add-opens jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" />
+      <module name="bjlthy-quartz" options="-parameters --add-opens jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" />
+      <module name="bjlthy-system" options="-parameters --add-opens jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED" />
+    </option>
+  </component>
+</project>

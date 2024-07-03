@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>激光皮带秤实时数据</title>
+	<link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{/js/plugins/bootstrap-3.4.1-dist/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/js/plugins/bootstrap-select-1.13.14/dist/css/bootstrap-select.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/templates/lbss/css/indexCom.css}" rel="stylesheet">
+    <link th:href="@{/templates/lbss/css/LbssRealtime.css}" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        #beltLidar {
+            width: 500px;
+            height: 450px;
+            top: -155px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top">
+        <div class="top-left left">
+            <div class="logo left"></div>
+            <div class="company left">
+                <div style="width: 100%;height: 36%;margin-top: 3%;">
+                    <div class="sparkSet" id="company_name" style="font-size:2.2rem;color: #63CDFF;cursor:pointer;">北京龙田华远科技有限公司</div>
+                </div>
+                <div style="width: 100%;height: 44%;">
+                    <div id="localtime" style="font-size:1.8rem;"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="top-middle left">
+            <div class="top-middle">
+				<input type="hidden" th:value="${belt_name}" id="belt_name"/>
+            </div>
+            <div class="con-top">
+
+            </div>
+        </div>
+        <div class="top-middle2 left">
+            <div class="beltOrIronSet" id="system_name" style="cursor:pointer;">激光皮带秤系统</div>
+        </div>
+        <div class="top-right left">
+            <div class="left" style="width: 100%;height: 100%;">
+            	<div class="left" style="width: 50%;height: 100%;margin-top: 2%;">
+                    <div class="col-sm-10">
+                        <select id="detail" class="selectpicker" data-width="180px" title="皮带秤实时数据" onchange="queryDetailInfo();">
+                             <option value="实时">皮带秤实时数据</option>
+	                         <option value="皮带统计">皮带秤煤量统计数据</option>
+	                         <option value="皮带详细">皮带秤煤量详细数据</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="left" style="width: 30%;height: 100%;margin-top: 2%;">
+                    <div class="col-sm-10">
+                        <select id="manage" class="selectpicker" data-width="180px" title="管理" onchange="pageSwitch();">
+		                     <option value="汇总">汇总</option>
+		                     <option value="后台">后台</option>
+		                     <option value="关闭">关闭</option>
+                        </select>
+                    </div>
+                </div>
+			
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="index_tabs" >
+		<!-- 左侧内容 -->
+		<div class="box_left">
+			<div class="left_top">
+				<div class="left_top_02">
+					<div class="module_title">皮带机速度值</div>
+					<div id="beltSpeed" class="left_top_content"></div>
+				</div>
+			</div>
+			<div class="left_center">
+				<div class="left_center_02">
+					<div style="width: 100%;height: 90%;">
+						<div class="module_title">皮带机实时煤流截面曲线</div>
+						<div id="beltLidar"></div>
+					</div>
+					<div style="width: 100%;height: 10%;text-align: center;">
+						<div id="lidarWarning" style="font-size: 0.85vw;font-weight: bold;color: #db0a0a;"></div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="left_bottom">
+				<div class="left_bottom_02">
+					<div style="width: 100%;height: 40%;">
+						<div class="module_title" onclick="checkZeroInfo();">调零信息</div>
+					</div>
+					<div style="width: 100%;height: 55%;">
+						<div class="data-info">调零结果 <span style="margin-left: 20%;color: #08f43b" id="zeroResult">成功</span></div>
+						<div class="data-info">调零时间 <span style="margin-left: 20%" id="zeroTime">2022-08-10 17:20:11</span></div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- 中间内容 -->
+		<div class="box_center">
+			<div class="box_center_02">
+				<div class="cen_module_title">实时监测	</div>
+				<div class="box_center_top">
+					<div id="beltWeight" class="top_count_weight_echarts"></div>
+					<div class="top_count_weight_data">
+						<div style="width: 100%;height: 70%;">
+						
+							<div style="width: 42%;float: left;">
+								<div id="hourWeight" class="weightstyle">整时累计过煤重量：1.45 t</div>
+							</div>
+							<div class = "weight_line"></div>
+							<div style="width: 42%;float: left;">
+								<div id="totalweight" class="weightstyle">当日过煤重量：2634.45 t</div>
+							</div>
+						</div>
+						<div style="width: 100%;height: 20%;">
+							<div id="hourWeight_warning" style="font-size: 0.75vw;font-weight: bold;color: #db0a0a;margin-left: 7%;"></div>
+						</div>
+					</div>
+					<div id="beltVolume" class="top_count_volume_echarts"></div>
+					<div class="top_count_volume_data">
+						<div style="width: 42%;height: 80%;float: left;">
+							<div id="hourVolume" class="volumestyle">整时累计过煤体积：0.49 m³</div>
+						</div>
+						<div class = "volume_line"></div>
+						<div style="width: 42%;height: 80%;float: left;">
+							<div id="totalvolume" class="volumestyle" style="margin-left: 15%;">当日过煤体积：3197.05 m³/h</div>
+						</div>
+					</div>
+					<div class="top_orther_data">
+						<div id="hunmei" class="hunmei">混煤密度：1.36 t/m³</div>
+						<div class = "volume_line1"></div>
+						<div id="density" class="songsan">松散密度：1.36 t/m³</div>
+						<div class = "volume_line1"></div>
+						<div id="gangueRatio" class="waste">含矸率：0 %</div>
+					</div>
+				</div>
+				<div class="box_center_bottom">
+					<div class="box_center_bottom_inner">
+						<div class="inner_belt_state">
+							<div class="belt_content">激光雷达状态：</div>
+							<div class="belt_state">
+								<div class="belt_yuan">
+									<div class="breathe-belt"></div>
+									<span style="font-size: 0.75vw;font-weight: bold;">异常</span>
+								</div>
+							</div>
+						</div>
+						<div class="inner_belt_state">
+							<div class="belt_content">皮带秤状态：</div>
+							<div class="belt_state">
+								<div class="belt_yuan">
+									<div class="breathe-belt"></div>
+									<span style="font-size: 0.75vw;font-weight: bold;">异常</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<!-- 右侧内容 -->
+		<div class="box_right">
+			<div class="right_top">
+				<div class="right_top_02">
+					<div class="module_title">当日三班信息</div>
+					<div id="beltShift" class="right_top_content"></div>
+				</div>
+			</div>
+			<div class="right_center">
+				<div class="right_center_02">
+					<div class="module_title">近七日产量信息</div>
+					<div id="beltWeek" class="right_bottom_content"></div>
+				</div>
+			</div>
+			<div class="right_bottom">
+				<div class="right_bottom_02">
+					<div class="module_title">当月产量信息</div>
+					<div id="beltMonth" class="right_bottom_content"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: echarts-js"/>
+<!-- 全局js -->
+<script th:src="@{/templates/lbss/js/echarts.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/plugins/bootstrap-select-1.13.14/dist/js/bootstrap-select.min.js}"></script>
+<script th:src="@{/templates/lbss/js/reconnecting-websocket.js}"></script>
+<script th:src="@{/templates/lbss/js/public/indexCom.js}"></script>
+<script th:src="@{/templates/lbss/js/public/times.js}"></script>
+<script th:src="@{/templates/lbss/js/data/data.js}"></script>
+<script th:src="@{/templates/lbss/js/data/pcWebSocket.js}"></script>
+<script th:src="@{/templates/lbss/js/data/BeltLidarDataWebSocket.js}"></script>
+<script th:src="@{/templates/lbss/js/data/LidarStatusWebSocket.js}"></script>
+<script type="text/javascript">
+   function queryDetailInfo(){
+		var name = $("#detail").val();
+		if(name == ""){
+			return;
+		}
+	    var url = getUrlBySelectName(name);
+	    window.open(url);
+	}
+	function getUrlBySelectName(selectName) {
+	    var url = "";
+	    switch (selectName) {
+	        case "实时":
+	            url = "/lbss/front/BeltRealtime";
+	            break;
+	        case "皮带统计":
+	            url = "/lbss/front/BeltStatis";
+	            break;
+	        case "皮带详细":
+	            url = "/lbss/front/BeltDetail";
+	            break;
+	    }
+	    return url;
+	}
+	
+	function pageSwitch(){
+		var name = $("#manage").val();
+		if(name == ""){
+			return;
+		}
+	    var url = "";
+	    switch (name) {
+	    	 case "汇总":
+		        url = "/lbss/frontMain";
+		        break;
+		    case "后台":
+		        url = "/lbss/login";
+		        break;
+		    case "关闭":
+		    	window.opener=null;
+				window.open('','_self');
+				window.close();
+		        return;
+	    }
+	    window.open(url);
+	} 
+</script>
+</body>
+	
+</html>

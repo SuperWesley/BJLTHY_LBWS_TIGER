@@ -1,0 +1,562 @@
+/* ██████████████████████████  中部分  █████████████████████████████████████████████████████████████ */
+
+.middle {
+    width: 100%;
+    height: 88%;
+}
+.module_title{
+	width: 100%;
+    height: 15%;
+    padding-top: 2%;
+    text-align: center;
+    text-indent: 0.7em;
+    font-size: 1.0vw;
+    font-weight: bold;
+    color: white;
+}
+.middle-left {
+    width: 28%;
+    height: 100%;
+    float: left;
+}
+.index_tabs{
+    width: 98%;
+    height: 90%;
+    position: absolute;
+}
+/* 主体左侧 */
+.box_left{
+	float: left;
+	width:23%;
+	height: 96%;
+	margin-left: 2%;
+	margin-top: 1%;
+}
+
+/* 主体左侧-上部 */
+.left_top{
+	width: 100%;
+	height: 33%;
+	margin-bottom: 4%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	padding: 1px;
+	border-radius: 10px;
+	
+}
+.left_top_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+/* 主体左侧-中部 */
+.left_center{
+	width: 100%;
+	height: 45%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+	margin-bottom: 4%;
+}
+
+.left_center_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+
+/* 主体左侧-下部 */
+.left_bottom{
+	width: 100%;
+	height: 17.5%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+}
+
+.left_bottom_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+
+/* 主体右侧 */
+.box_right{
+	width:25%;
+	height: 96%;
+	margin-left: 1%;
+	float: right;
+	margin-top: 1%;
+	
+}
+/* 主体左侧-上部 */
+.left_top{
+	width: 100%;
+	height: 33%;
+	margin-bottom: 4%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	padding: 1px;
+	border-radius: 10px;
+	
+}
+.left_top_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+/* 左侧模块内容样式*/
+.left_top_content{
+	width: 100%;
+	height: 80%;
+}
+/* 主体左侧-中部 */
+.left_center{
+	width: 100%;
+	height: 45%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+	margin-bottom: 4%;
+}
+
+.left_center_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+
+/* 主体左侧-下部 */
+.left_bottom{
+	width: 100%;
+	height: 17.5%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+}
+
+.left_bottom_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+
+/* 主体中部 */
+.box_center{
+	float: left;
+	width:48%;
+	height: 96%;
+	margin-left: 1%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+	margin-top: 1%;
+}
+
+.box_center_02{
+	float: left;
+	width:100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+
+/* 主体右侧-上部 */
+.right_top{
+	width: 100%;
+	height: 33%;
+	margin-bottom: 4%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+}
+
+.right_top_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+/* 主体右侧-中间 */
+.right_center{
+	width: 100%;
+	height: 46%;
+	margin-bottom: 4%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+}
+
+.right_center_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+/* 主体右侧-下部 */
+.right_bottom{
+	width: 100%;
+	height: 16.5%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+}
+
+.right_bottom_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+
+/* ██████████████████████████  下部分  █████████████████████████████████████████████████████████████ */
+
+.bottom {
+    width: 100%;
+    height: 15%;
+}
+
+.bottom-top {
+    width: 100%;
+    height: 30%;
+}
+
+.bottom-info {
+    width: 100%;
+    height: 80%;
+    /*background-image: url('/tcc/front/realtime/img/back_status.png');*/
+    /*background-repeat: repeat;*/
+    /*background-size: 100% 100%;*/
+}
+
+.infoDiv {
+    background-image: url('../img/realtime/tongxun.png');
+    background-repeat: repeat;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    margin-top: 1.5%;
+    float: left;
+}
+
+/* ██████████████████████████  元素 部分  █████████████████████████████████████████████████████████████ */
+/* 中间模块标题*/
+.cen_module_title{
+	width: 100%;
+    height: 4%;
+    padding-top: 2%;
+    text-align: center;
+    text-indent: 0.7em;
+    font-size: 1.0vw;
+    font-weight: bold;
+    color: white;
+}
+/* 主体中间-上部 */
+.box_center_top{
+	width: 100%;
+	height: 86%;
+}
+/* 主体中间-下部 */
+.box_center_bottom{
+	width: 100%;
+	height: 10%;
+}
+
+.right_top_content{
+	width: 100%;
+	height: 80%;
+}
+
+.right_bottom_content{
+	width: 100%;
+	height: 80%;
+}
+/* 中间模块内容样式*/
+.top_count_weight_echarts{
+	width: 100%;
+	height: 35%;
+}
+.top_count_weight_data{
+	width: 97%;
+	height: 10%;
+}
+/* 主体中部上部 - 重量实时数据*/
+.weightstyle{
+	margin-left: 15%;
+	width: 90%;
+	height: 80%;
+	color: #00EAFF;
+	text-align: center;
+	font-size: 1.00vw;
+	font-weight: bold;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	line-height: 2.1vw;
+	
+}
+
+.weight_line{
+	float: left;
+	width: 9%;
+	margin-top:1%;
+	height: 60%;
+	border-right: 2px dashed #04bcf3;
+}
+/* 主体中部上部 - 体积实时数据*/
+.top_count_volume_echarts{
+	width: 100%;
+	height: 35%;
+}
+.top_count_volume_data{
+	width: 88%;
+	height: 10%;
+	margin: auto;
+	border-bottom: 2px dashed #04bcf3;
+}
+/* 主体中部上部 - 体积实时数据*/
+.volumestyle{
+	float: left;
+	width: 100%;
+	height: 80%;
+	color: #00EAFF;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-size: 1.00vw;
+	font-weight: bold;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+}
+.volume_line{
+	float: left;
+	width: 9%;
+	height: 66%;
+	border-right: 2px dashed #04bcf3;
+}
+
+.volume_line1{
+	float: left;
+	width: 2%;
+	height: 66%;
+	border-right: 2px dashed #04bcf3;
+}
+.top_orther_data{
+	width: 88%;
+	height: 10%;
+	margin: auto;
+	margin-top:2%;
+	border-bottom: 2px solid #04bcf3;
+}
+.hunmei{
+	float: left;
+	width: 25%;
+	height: 65%;
+	color: #00EAFF;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-weight: bold;
+	font-size: 0.9vw;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+	
+}
+
+.songsan{
+	margin-left:2%;
+	float: left;
+	width: 40%;
+	height: 65%;
+	color: #00EAFF;
+	font-size: 0.45vw;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-weight: bold;
+	font-size: 0.9vw;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+	
+}
+
+.waste{
+	float: left;
+	margin-left: 2%;
+	width: 25%;
+	height: 65%;
+	color: #00EAFF;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-size: 0.9vw;
+	font-weight: bold;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+}
+.hourcocl{
+	float: left;
+	margin-left: 2%;
+	width: 35%;
+	height: 65%;
+	color: #00EAFF;
+	box-sizing: border-box;
+	line-height: 2.1vw;
+	text-align: center;
+	font-size: 1.00vw;
+	font-weight: bold;
+	border: 2px solid #016ae0;
+	border-radius: 25px;
+	background-color: #0d2954;
+}
+
+.right_bottom_title{
+	width: 100%;
+	height: 14%;
+	padding-top: 3%;
+	text-align: center;
+	font-size: 1.00vw;
+	font-weight: bold;
+    color: white;
+}
+
+/**   设备状态样式*/
+.box_center_bottom_inner{
+	width: 100%;
+	height: 100%;
+	margin-top:2%;
+}
+/* 主体中部下部 - 包含盒子 - 皮带机状态 */
+.inner_belt_state{
+	float: left;
+	width: 44%;
+	height: 80%;
+}
+.belt_content{
+	float: left;
+	width: 60%;
+	height: 100%;
+	margin-top: 5%;
+	text-align: center;
+	font-size: 0.95vw;
+	font-weight: bold;
+    color: #08deff;
+}
+.belt_state{
+	float: left;
+	width: 40%;
+	height: 100%;
+}
+.belt_yuan{
+	float: left;
+	margin-top: 18%;
+	color: #63CDFF;
+}
+
+.breathe-lidar{ position:relative; width:20px; height:20px; top:2px;float:left;  border:1px solid #008000; border-radius:20px; color:#fff; font-size:10px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.3); overflow:hidden; 
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#FF0000), to(#FF0000));
+}
+
+.breathe-belt{ position:relative; width:20px; height:20px; top:2px;float:left;   border:1px solid #008000; border-radius:20px; color:#fff; font-size:20px;  cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.3); overflow:hidden; 
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#FF0000), to(#FF0000));
+}
+/* ██████████████████████████  元素 消息 部分  █████████████████████████████████████████████████████████████ */
+
+strong {
+    display: block;
+    color: #FFFFFF;
+    font-family: 'electronicFont';
+    font-size: 20px;
+    text-align: center;
+}
+
+strong1 {
+    display: block;
+    color: #FFFFFF;
+    font-family: 'electronicFont';
+    font-size: 15px;
+    text-align: center;
+}
+
+p {
+    display: block;
+    color: #63CDFF;
+    font-size: 18px;
+    padding-bottom: 4px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.text-info {
+    width: 85%;
+    height: 66%;
+    float: left;
+    position: relative;
+    background-image: url('../img/realtime/back_text.png');
+    background-repeat: repeat;
+    background-size: 100% 100%;
+}
+
+.charts {
+    width: 100%;
+    height: calc(100% - 15px);
+}
+
+.data-info {
+	width: 80%;
+	height: 22%;
+	color: #fff;
+	margin-left: 10%;
+	margin-top: 3%;
+	font-size: 0.8vw;
+	font-weight: bold;
+}
+
+.stateImgDiv{ position:relative; width:20px; height:20px; top:2px;float:left;   border:1px solid #008000; border-radius:20px; color:#fff; font-size:20px;  cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.3); overflow:hidden; 
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#FF0000), to(#FF0000));
+}

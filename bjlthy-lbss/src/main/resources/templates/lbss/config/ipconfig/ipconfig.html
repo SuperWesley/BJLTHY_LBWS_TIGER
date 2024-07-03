@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('IP配置列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label style="width: 86px;">皮带秤名称：</label>
+                                <select name="belt_name" id="belt_name" th:with="type=${@dict.getType('belt_name')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>参数名称：</label>
+                                <input type="text" name="name"/>
+                            </li>
+                            <li>
+                                <label>编码：</label>
+                                <input type="text" name="code"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="config:ipconfig:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="config:ipconfig:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="config:ipconfig:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="config:ipconfig:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('config:ipconfig:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('config:ipconfig:remove')}]];
+        var statusFlag = [[${@permission.hasPermi('monitor:job:changeStatus')}]];
+        var prefix = ctx + "lbss/config/ipconfig";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "IP配置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '',
+                    visible: false
+                },
+                {
+                    field: 'belt_name',
+                    title: '皮带秤名称'
+                },
+                {
+                    field: 'name',
+                    title: '参数名称'
+                },
+                {
+                    field: 'code',
+                    title: '编码'
+                },
+                {
+                    field: 'value',
+                    title: '参数值'
+                },
+                {
+                    field: 'status',
+                    title: '状态',
+                    visible: false
+                },
+                {
+                    field: 'remark',
+                    title: '备注'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                        if(row.name.indexOf("继电器IP") >0){
+                            actions.push("<a class='btn btn-primary btn-xs " + statusFlag + "' href='javascript:void(0)' onclick='restart(" +JSON.stringify(row)+")'><i class='fa fa-play-circle-o'></i> 执行</a> ");
+                        }else{
+                            actions.push("<a class='btn btn-primary btn-xs " + statusFlag + "' href='javascript:void(0)' style='visibility: hidden' onclick='run(" + row.id + ")'><i class='fa fa-play-circle-o'></i> 执行</a> ");
+                        }
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        //控制重启设备
+        function restart(obj){
+            var code = obj.code;
+            var value = obj.value;
+            //控制Nano网络继电器
+            if(code == "REAL_IP"){
+                kongzhiNano(value);
+            }
+            //控制雷达网络继电器
+            else if(code == "Lidar_REAL_IP"){
+                kongzhiLidar(value);
+            }
+        }
+        function kongzhiNano(value){
+            alert("控制网络继电器nano");
+
+            $.ajax({
+                url: prefix + "/kongzhiNano?ip="+value,
+                type: "post",
+                success: function (obj) {
+                    if (obj == "1"){
+                        alert("开启成功");
+                    }else if(obj == "0"){
+                        alert("关闭成功");
+                    }else{
+                        alert("该设备IP连接失败");
+                    }
+                }
+            });
+        }
+
+        function kongzhiLidar(value){
+            alert("控制网络继电器激光雷达");
+            $.ajax({
+                url: prefix + "/kongzhiLidar?ip="+value,
+                type: "post",
+                success: function (obj) {
+                    if (obj == "1"){
+                        alert("重启成功");
+                    }else {
+                        alert("该设备IP连接失败");
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

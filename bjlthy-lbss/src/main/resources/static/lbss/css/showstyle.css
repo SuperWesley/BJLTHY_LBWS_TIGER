@@ -1,0 +1,324 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: PingFangSC-Light, 微软雅黑;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow: -Scroll;
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+.table {
+	table-layout: fixed !important;
+	word-break: break-all;
+}
+.data {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: url('../img/background.png') center top no-repeat;
+	background-size: 100% 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	outline: none;
+}
+/**顶部*/
+.data-top {
+	width: 100%;
+	height: 10%;
+	background-color: #0d2954;
+}
+/*头部LOGO*/
+.logo{
+	float: left;
+	width: 25%;
+	height: 100%;
+}
+.logo_img{
+	margin-left: 1.5625em;
+	margin-top: 1%;
+	float: left;
+	width: 20%;
+	height: 90%;
+	background-image: url(../img/kuang.png);
+	background-repeat:no-repeat;
+	background-position:center center;
+}
+/*头部公司与时间部分*/
+.logo_content{
+	margin-left: 5%;
+	margin-top: 2%;
+	float: left;
+	width: 17vw;
+	height: 5vw;
+}
+.company{
+	color: #63CDFF;
+	text-indent: 0.3em;
+	font-size: 1.2vw;
+	font-weight: bold;
+	
+}
+.nowtime{
+	color: #63CDFF;
+	text-indent: 0.3em;
+	font-size: 0.89vw;
+	font-weight: bold;
+}
+/*统计信息*/
+.total_info{
+	float: left;
+	width: 23%;
+	height: 100%;
+}
+
+/*统计信息-按钮样式*/
+.button_style{
+	background-color:transparent;
+	border:none;
+	font-weight: bold;
+    color: #07d1ff;
+	font-size: 1.1vw;
+	float: left;
+	width: 20%;
+	margin-top:6%;
+	
+}
+
+/*头部系统标题*/
+.title{
+	position: relative;
+	float: left;
+	width: 36%;
+	font-size: 2.0vw;
+	font-weight: bold;
+	text-align: center;
+	line-height: 4.3vw;
+	letter-spacing: 2px;
+	color: #63CDFF;
+}
+/*头部控制部分*/
+.controller{
+	position: relative;
+	float: left;
+	top: 10%;
+	width: 16%;
+	height: 85%;
+}
+/*头部控制部分管理平台*/
+.admin{
+	float: left;
+	width: 45%;
+	height: 100%;
+}
+.admin_img{
+	float: left;
+	margin-right: 5%;
+	width: 1.2vw;
+	height: 1vw;
+	background-image: url(../img/user.png);
+	background-repeat:no-repeat;
+}
+.admin_text{
+	float: left;
+	width: 70%;
+	height: 45%;
+	color: #0686D8;
+	font-size: 1.0vw;
+	font-weight: bold;
+	text-indent: 0.3125em;
+	border-right: 1px solid #0686D8;
+}
+/*头部控制部分返回按钮*/
+.goback{
+	float: left;
+	width: 45%;
+	height: 100%;
+}
+.goback_img{
+	float: left;
+	margin-right: 5%;
+	width: 1.2vw;
+	height: 2vw;
+	background-image: url(../img/on-off.png);
+	background-repeat:no-repeat;
+}
+.goback_text{
+	background-color:transparent;
+	border:none;
+	float: left;
+	width: 70%;
+	height: 96%;
+	color: #0686D8;
+	font-weight: bold;
+	font-size: 1.0vw;
+}
+.data-top>.top-left {
+	width: 29%;
+	height: 98%;
+	margin-top:15px;
+	float:left;
+}
+.data-top>.top-left>.logo-left {
+	height: 65%;
+	width: 15%;
+	float: left;
+	margin-right: 30px;
+	position: relative;
+	background-image: url('../img/LOGO.png');
+	background-repeat: repeat;
+	background-size: 100% 100%;
+}
+
+.data-top>.top-left>.logo-right {
+	height: 90%;
+	width: 78%;
+	float: left;
+}
+.data-top>.top-center {
+	width: 51%;
+	height: 100%;
+	float:left;
+}
+.data-top>.top-center>.con-top {
+	width: 100%;
+	height: 55%;
+	position: relative;
+	margin-top: 15px;
+}
+.con-bottom {
+	width: 100%;
+	height: 7%;
+	position: relative;
+}
+
+
+.bottom-left {
+	width: 70%;
+	height: 100%;
+	float: left;
+}
+.bottom-right {
+	width: 30%;
+	height: 90%;
+	margin-top: 1%;
+	position: relative;
+	float: left;
+}
+.data-top>.top-right {
+	width: 19%;
+	height: 100%;
+	float:left;
+}
+/*底部*/
+.data-bottom {
+	width: 95%;
+	height: 80%;
+	margin-left: 2%;
+}
+
+.data-bottom>.con-tatil {
+	width: 100%;
+	height: 13%;
+	/* background-color: #092f5d; */
+	background-repeat: repeat;
+	background-size: 100% 100%;
+}
+
+.data-bottom>.con-datil {
+	width: 100%;
+	height: 88%;
+	background-image: url('../img/back_tatil.png');
+	background-repeat: repeat;
+	background-size: 100% 100%;
+}
+
+.data-bottom>.con-con {
+	width: 100%;
+	height: 4%;
+}
+.data-bottom>.con-info {
+	width: 100%;
+	height: 80%;
+	margin-top: 2%;
+}
+.datagrid {
+	margin: 0;
+	padding: 0 4px;
+	white-space: nowrap;
+	word-wrap: normal;
+	overflow: hidden;
+	height: 35px;
+	line-height: 37px;
+	font-size: 20px;
+	color: #D9E9F1;
+	text-align: center;
+}
+
+.formTable {
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table, table tr th, table tr td {
+	border: 1px solid #0094ff;
+}
+
+.dataAllBorder01 {
+	width: 100%;
+	height: 96%;
+	border-radius: 10px;
+	position: relative;
+	background-image: url('../img/back_sveinfo.png');
+	background-repeat: repeat;
+	background-size: 100% 100%;
+}
+
+.dataAllBorder02 {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+
+.data_tit {
+	width: 32%;
+	height: 7%;
+	background-image: url("../img/tit01s.png");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	margin: 0 auto;
+	font-size: 12px;
+	color: #ffffff;
+	text-align: center;
+}
+
+.data_chart {
+	width: 96%;
+	height: 90%;
+	padding-top: 2%;
+}
+.buttonstyle {
+	border:none;
+	background-color:transparent; 
+	color: #63CDFF;
+	font-size: 2.3rem;
+	float: left;
+	width: 16%;
+}
+.data_tit1 {
+	width: 46%;
+	height: 10%;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	margin: 0 auto;
+	font-size: 24px;
+	color: #63CDFF;
+	text-align: center;
+	font-weight: 600;
+}

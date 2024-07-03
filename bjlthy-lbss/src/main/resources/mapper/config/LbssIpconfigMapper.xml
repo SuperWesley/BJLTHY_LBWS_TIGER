@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.config.config.mapper.LbssIpconfigMapper">
+    
+    <resultMap type="LbssIpconfig" id="LbssIpconfigResult">
+        <result property="id"    column="id"    />
+        <result property="belt_name"    column="belt_name"    />
+        <result property="name"    column="name"    />
+        <result property="code"    column="code"    />
+        <result property="value"    column="value"    />
+        <result property="type"    column="type"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectLbssIpconfigVo">
+        select id, belt_name,name, code, value, type,status, remark from lbss_ipconfig
+    </sql>
+
+    <select id="selectLbssIpconfigList" parameterType="LbssIpconfig" resultMap="LbssIpconfigResult">
+        <include refid="selectLbssIpconfigVo"/>
+        <where>  
+            <if test="belt_name != null  and belt_name != ''"> and belt_name like concat('%', #{belt_name}, '%')</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="value != null  and value != ''"> and value = #{value}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectLbssIpconfigById" parameterType="Integer" resultMap="LbssIpconfigResult">
+        <include refid="selectLbssIpconfigVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLbssIpconfig" parameterType="LbssIpconfig" useGeneratedKeys="true" keyProperty="id">
+        insert into lbss_ipconfig
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="belt_name != null">belt_name,</if>
+            <if test="name != null">name,</if>
+            <if test="code != null">code,</if>
+            <if test="value != null">value,</if>
+            <if test="type != null">type,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="belt_name != null">#{belt_name},</if>
+            <if test="name != null">#{name},</if>
+            <if test="code != null">#{code},</if>
+            <if test="value != null">#{value},</if>
+            <if test="type != null">#{type},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLbssIpconfig" parameterType="LbssIpconfig">
+        update lbss_ipconfig
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="belt_name != null">belt_name = #{belt_name},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="value != null">value = #{value},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLbssIpconfigById" parameterType="Integer">
+        delete from lbss_ipconfig where id = #{id}
+    </delete>
+
+    <delete id="deleteLbssIpconfigByIds" parameterType="String">
+        delete from lbss_ipconfig where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

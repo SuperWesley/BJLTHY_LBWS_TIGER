@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.data.weight.mapper.LbssWeightMapper">
+    
+    <resultMap type="LbssWeight" id="LbssWeightResult">
+        <result property="id"    column="id"    />
+        <result property="time"    column="time"    />
+        <result property="belt_name"    column="belt_name"    />
+        <result property="volume"    column="volume"    />
+        <result property="totalVolume"    column="total_volume"    />
+        <result property="weight"    column="weight"    />
+        <result property="totalWeight"    column="total_weight"    />
+        <result property="density"    column="density"    />
+        <result property="gangueRatio"    column="gangueRatio"    />
+        <result property="speed"    column="speed"    />
+        <result property="mor_weight"    column="mor_weight"    />
+        <result property="aft_weight"    column="aft_weight"    />
+        <result property="nig_weight"    column="nig_weight"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectLbssWeightVo">
+        select id, time, belt_name,volume, total_volume, weight, total_weight, density, gangueRatio, speed, mor_weight, aft_weight, nig_weight from lbss_weight
+    </sql>
+
+    <select id="selectLbssWeightList" parameterType="LbssWeight" resultMap="LbssWeightResult">
+        <include refid="selectLbssWeightVo"/>
+        <where>  
+            <if test="nigWeight != null "> and nig_weight = #{nigWeight}</if>
+        </where>
+    </select>
+    
+    <select id="selectLbssWeightById" parameterType="Integer" resultMap="LbssWeightResult">
+        <include refid="selectLbssWeightVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLbssWeight" parameterType="LbssWeight" useGeneratedKeys="true" keyProperty="id">
+        insert into lbss_weight
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="time != null">time,</if>
+            <if test="belt_name != null">belt_name,</if>
+            <if test="volume != null">volume,</if>
+            <if test="totalVolume != null">total_volume,</if>
+            <if test="weight != null">weight,</if>
+            <if test="totalWeight != null">total_weight,</if>
+            <if test="density != null">density,</if>
+            <if test="gangueRatio != null">gangueRatio,</if>
+            <if test="speed != null">speed,</if>
+            <if test="mor_weight != null">mor_weight,</if>
+            <if test="aft_weight != null">aft_weight,</if>
+            <if test="nig_weight != null">nig_weight,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="time != null">#{time},</if>
+            <if test="belt_name != null">#{belt_name},</if>
+            <if test="volume != null">#{volume},</if>
+            <if test="totalVolume != null">#{totalVolume},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="totalWeight != null">#{totalWeight},</if>
+            <if test="density != null">#{density},</if>
+            <if test="gangueRatio != null">#{gangueRatio},</if>
+            <if test="speed != null">#{speed},</if>
+            <if test="mor_weight != null">#{mor_weight},</if>
+            <if test="aft_weight != null">#{aft_weight},</if>
+            <if test="nig_weight != null">#{nig_weight},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLbssWeight" parameterType="LbssWeight">
+        update lbss_weight
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="time != null and time != ''">time = #{time},</if>
+            <if test="belt_name != null and belt_name != ''">belt_name = #{belt_name},</if>
+            <if test="volume != null">volume = #{volume},</if>
+            <if test="totalVolume != null">total_volume = #{totalVolume},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="totalWeight != null">total_weight = #{totalWeight},</if>
+            <if test="density != null">density = #{density},</if>
+            <if test="gangueRatio != null">gangueRatio = #{gangueRatio},</if>
+            <if test="speed != null">speed = #{speed},</if>
+            <if test="mor_weight != null">mor_weight = #{mor_weight},</if>
+            <if test="aft_weight != null">aft_weight = #{aft_weight},</if>
+            <if test="nig_weight != null">nig_weight = #{nig_weight},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLbssWeightById" parameterType="Integer">
+        delete from lbss_weight where id = #{id}
+    </delete>
+
+    <delete id="deleteLbssWeightByIds" parameterType="String">
+        delete from lbss_weight where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 查询一小时内过煤重量 -->
+    <select id="findHourWeight" parameterType="String" resultType="Double">
+        select belt_name,ifnull((MAX(total_weight)-MIN(total_weight)) ,0)total_weight,count(1) from lbss_weight
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 皮带名称检索 -->
+                belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 开始时间检索 -->
+                and time like '${param2}%'
+            </if>
+
+
+        </where>
+    </select>
+    
+       <!-- 查询当日过煤信息 -->
+    <select id="findDayWeight" parameterType="String" resultType="Map">
+        SELECT belt_name,ifnull((MAX(total_weight)-MIN(total_weight)) ,0)total_weight,ifnull((MAX(total_volume)-MIN(total_volume)) ,0)total_volume,count(1) from lbss_weight
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 皮带名称检索 -->
+                belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 开始时间检索 -->
+                and time &gt;= #{param2}
+            </if>
+            <if test="param3 != null and param3 != ''"><!-- 结束时间检索 -->
+                and time &lt;= #{param3}
+            </if>
+
+        </where>
+    </select>
+    
+    <!-- 查询最近1分钟的瞬时信息 -->
+    <select id="findMinuteInfo" parameterType="String" resultMap="LbssWeightResult">
+    	 SELECT * from (select id,time,belt_name, volume, total_volume, weight, total_weight, density, gangueRatio, speed, mor_weight, aft_weight, nig_weight from lbss_weight order by time desc limit 20) a
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 开始时间检索 -->
+                belt_name like '${param1}%'
+            </if>
+        </where>
+    	 order by time desc
+    </select>
+    
+    <!-- 查询最新的瞬时信息 -->
+    <select id="findNewInfo" resultMap="LbssWeightResult">
+    	 select id,belt_name,time, volume, total_volume, weight, total_weight, density, gangueRatio, speed, mor_weight, aft_weight, nig_weight from lbss_weight order by time desc limit 1
+    </select>
+    
+    <!-- 汇总某段时间内的过煤信息 -->
+    <select id="selectSumWeight" parameterType="String" resultMap="LbssWeightResult">
+        SELECT belt_name,ifnull((MAX(total_weight)-MIN(total_weight)) ,0)total_weight,ifnull((MAX(total_volume)-MIN(total_volume)) ,0)total_volume,count(1) from lbss_weight
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 皮带名称检索 -->
+                belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 开始时间检索 -->
+                and time &gt;= #{param2}
+			</if>
+			<if test="param3 != null and param3 != ''"><!-- 结束时间检索 -->
+
+				and time &lt;= #{param3}
+			</if>
+           
+        </where>
+    </select>
+
+    <!-- 查询一小时内过煤重量 -->
+    <select id="selectShiftWeight" parameterType="String" resultType="Double">
+        select ifnull((MAX(total_weight)-MIN(total_weight)) ,0)total_weight from lbss_weight
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 皮带名称检索 -->
+                belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 开始时间检索 -->
+                and time &gt;= #{param2}
+            </if>
+            <if test="param3 != null and param3 != ''"><!-- 结束时间检索 -->
+                and time &lt;= #{param3}
+            </if>
+        </where>
+    </select>
+
+     <!-- 查询一段时间内瞬时重量和 -->
+    <select id="findSumWeight" parameterType="String" resultMap="LbssWeightResult">
+        SELECT belt_name,(sum(weight)) total_weight,(sum(volume)) total_volume from lbss_weight
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 皮带名称检索 -->
+                belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 开始时间检索 -->
+                and time &gt;= #{param2}
+            </if>
+            <if test="param3 != null and param3 != ''"><!-- 结束时间检索 -->
+                and time &lt; #{param3}
+            </if>
+        </where>
+    </select>
+</mapper>

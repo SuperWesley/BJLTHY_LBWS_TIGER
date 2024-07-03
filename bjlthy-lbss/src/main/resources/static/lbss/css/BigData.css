@@ -1,0 +1,260 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+p{
+	margin: 0 !important;
+}
+html{
+	min-width: 1440px;
+	min-height: 700px;
+}
+
+body{
+	width: 100%;
+	height: 100%;
+	font-size: 100%;
+	overflow: auto;
+}
+.data_bodey{
+	width: 100%;
+	height: 100%;
+	background-image: url(../img/background.png);
+	background-size: 100% 100%;
+	position: absolute;
+
+
+}
+.index_nav{
+	width: 100%;
+	height: 10%;
+}
+.index_tabs{
+	width: 98%;
+	height: 90%;
+	position: absolute;
+}
+
+/* 主体左侧 */
+.box_left{
+	float: left;
+	width:23%;
+	height: 96%;
+	margin-left: 2%;
+	margin-top: 1%;
+}
+
+/* 主体中部 */
+.box_center{
+	float: left;
+	width:48%;
+	height: 96%;
+	margin-left: 1%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+	margin-top: 1%;
+}
+
+.box_center_02{
+	float: left;
+	width:100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+
+/* 主体右侧 */
+.box_right{
+	width:25%;
+	height: 96%;
+	margin-left: 1%;
+	float: right;
+	margin-top: 1%;
+
+}
+
+/* 主体左侧-上部 */
+.left_top{
+	width: 100%;
+	height: 33%;
+	margin-bottom: 4%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	padding: 1px;
+	border-radius: 10px;
+
+}
+.left_top_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+/* 主体左侧-中部 */
+.left_center{
+	width: 100%;
+	height: 45%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+	margin-bottom: 4%;
+}
+
+.left_center_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+
+/* 主体左侧-下部 */
+.left_bottom{
+	width: 100%;
+	height: 17.5%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+}
+
+.left_bottom_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+
+/* 主体右侧-上部 */
+.right_top{
+	width: 100%;
+	height: 33%;
+	margin-bottom: 4%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+}
+
+.right_top_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+/* 主体右侧-中间 */
+.right_center{
+	width: 100%;
+	height: 46%;
+	margin-bottom: 4%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+}
+
+.right_center_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+/* 主体右侧-下部 */
+.right_bottom{
+	width: 100%;
+	height: 16.5%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	padding: 1px;
+	background-color: #0d2954;
+}
+
+.right_bottom_02{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: 2px solid #016ae0;
+	border-radius: 10px;
+	background-color: #0d2954;
+}
+/* 主体中间-上部 */
+.box_center_top{
+	width: 100%;
+	height: 86%;
+}
+/* 主体中间-下部 */
+.box_center_bottom{
+	width: 100%;
+	height: 10%;
+}
+
+.right_top_content{
+	width: 100%;
+	height: 80%;
+}
+
+.right_bottom_content{
+	width: 100%;
+	height: 80%;
+}
+
+.top_button{
+	width: 98%;
+	height: 5%;
+}
+
+.top_tolinfo{
+	width: 96%;
+	height: 38%;
+	margin-top:1%;
+	margin-left:2%;
+	background-image: url(../img/tongji.png);
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
+}
+.bottom_tolinfo{
+	width: 98%;
+	height: 50%;
+	margin-left:2%;
+	float: left;
+	margin-top: 1%;
+}
+
+.tolinfo_left{
+	width: 48%;
+	height: 100%;
+	float: left;
+	background-image: url(../img/zuoxia.png);
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
+}
+
+.tolinfo_right{
+	width: 48%;
+	height: 100%;
+	float: left;
+	margin-left: 2%;
+	background-image: url(../img/youxia.png);
+	background-repeat:no-repeat;
+	background-size: 100% 100%;
+}

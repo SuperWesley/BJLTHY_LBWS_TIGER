@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/templates/lbss/css/BigData.css}" rel="stylesheet" />
+<link th:href="@{/templates/lbss/css/lbss.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+<title>激光皮带秤煤量汇总</title>
+<style>
+.charts {
+	width: 100%;
+	height: 80%;
+}
+
+</style>
+</head>
+<body>
+	<div class="data_bodey">
+		<div class="index_nav">
+			<div class="logo_img">
+				<div class="logo"></div>
+				<div class="logo_content">
+					<div style="width: 100%;height: 50%;">
+						<div class="company" id="company_name">红柳林矿业有限公司</div>
+					</div>
+					<div style="width: 100%;height: 40%;">
+						<div id=localtime class="nowtime"></div>
+					</div>
+				</div>
+			</div>
+			<div class="title">激光皮带秤煤量汇总</div>
+			<div class="controller">
+				<ul class="nav navbar-top-links navbar-right welcome-message">
+	                <li class="dropdown user-menu">
+	                     <a href="javascript:void(0)" class="dropdown-toggle" data-hover="dropdown">
+	                         <span class="hidden-xs" style="font-size: 20px;">admin</span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li>
+	                              <a href="/lbss/login" target="_self"><i class="fa fa-key"></i> 后台</a>
+	                         </li>
+							 <li>
+								 <a href="/lbss/login" target="_self"><i class="fa fa-key"></i> 注销</a>
+							 </li>
+	                        
+	                     </ul>
+	                 </li>
+            	</ul>
+			</div>
+		</div>
+		
+		<div class="index_tabs" style="width: 100%;">
+			<div style="height: 1%;"></div>
+			<div class="top_button">
+				<div  style="width: 90%;height:80%; float: left;"></div>
+				<a href="/lbss/frontMain/openBeltDetailPage" target="_blank" class="mainbutstyle">详细查询</a>
+		    </div>
+			<div class="top_tolinfo">
+				<div style="height: 7%;"></div>
+				<div style=" text-align:left;margin-left: 2%;font-size: 24px;color: #00eaff;height: 25%;">各皮带实时统计信息</div>
+				<table id="dataTab" width="93%" border="1px"
+					style="table-layout:fixed; margin-left:2%; border:2px solid #0094ff;background-color: #103357;">
+					<thead>
+						<tr style="background-color: #146f9a;">
+							<td class="rowstyle">皮带秤名称</td>
+							<td class="rowstyle">瞬时煤量(t/h)</td>
+							<td class="rowstyle">小时煤量(t)</td>
+							<td class="rowstyle">密度(t/m<sup>3</sup>)</td>
+							<td class="rowstyle">含矸率(%)</td>
+							<td class="rowstyle">速度(m/s)</td>
+							<td class="rowstyle">晚班产量(t)</td>
+							<td class="rowstyle">早班产量(t)</td>
+							<td class="rowstyle">中班产量(t)</td>
+							<td class="rowstyle">日产(t)</td>
+							<td class="rowstyle">月产(t)</td>
+							<td class="rowstyle">年产(t)</td>
+							<td class="rowstyle">状态</td>
+
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="bottom_tolinfo">
+				<div class="tolinfo_left">
+					<div style="height: 7%;"></div>
+					<div style=" text-align:left;margin-left: 4%;font-size: 24px;color: #00eaff;height: 15%;">各皮带瞬时煤量</div>
+					<div id="instantCharts" class="charts"></div>
+				</div>
+				<div class="tolinfo_right">
+					<div style="height: 7%;"></div>
+					<div style="width: 100%;height: 15%;">
+						<div style="width:53%; float: left;margin-left: 4%;font-size: 24px;color: #00eaff;">各皮带产量统计</div>
+						<div style="width: 42%;float: left;">
+							<input type="button" value="日" id="dayInfo" class="inpBtu" />
+							<input type="button" value="周" id="weekInfo" class="inpBtu" style="color: #01f5f1;" />
+							<input type="button" value="月" id="monthInfo" class="inpBtu" />
+							<input type="button" value="年" id="yearInfo" class="inpBtu" />
+						</div>
+					</div>
+					<div id="totalCharts" class="charts"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: echarts-js" />
+	<!-- 全局js -->
+	<script th:src="@{/templates/lbss/js/echarts.min.js}"></script>
+	<script th:src="@{/templates/lbss/js/public/times.js}"></script>
+	<script th:src="@{/templates/lbss/js/public/indexCom.js}"></script>
+	<script th:src="@{/templates/lbss/js/data/main.js}"></script>
+	<script type="text/javascript">
+    //打开主界面
+    function openwin() {
+        window.location.href = "/lbss/login";
+    }
+    
+</script>
+</body>
+
+</html>

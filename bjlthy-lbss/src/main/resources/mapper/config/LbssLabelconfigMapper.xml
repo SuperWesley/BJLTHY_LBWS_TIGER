@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.config.config.mapper.LbssLabelconfigMapper">
+    
+    <resultMap type="LbssLabelconfig" id="LbssLabelconfigResult">
+        <result property="id"    column="id"    />
+        <result property="timeCycle"    column="timeCycle"    />
+        <result property="timeCycleMax"    column="timeCycleMax"    />
+        <result property="timeCycleStep"    column="timeCycleStep"    />
+        <result property="adFrequency"    column="adFrequency"    />
+        <result property="timeCnt"    column="timeCnt"    />
+        <result property="coeff"    column="coeff"    />
+        <result property="adCoeffStdMin"    column="adCoeffStdMin"    />
+        <result property="threshold"    column="threshold"    />
+        <result property="adCount"    column="adCount"    />
+        <result property="accuracy"    column="accuracy"    />
+        <result property="updateTime"    column="updateTime"    />
+    </resultMap>
+
+    <sql id="selectLbssLabelconfigVo">
+        select id, timeCycle, timeCycleMax, timeCycleStep, adFrequency, timeCnt, coeff, adCoeffStdMin, threshold, adCount, accuracy, updateTime from lbss_labelconfig
+    </sql>
+
+    <select id="selectLbssLabelconfigList" parameterType="LbssLabelconfig" resultMap="LbssLabelconfigResult">
+        <include refid="selectLbssLabelconfigVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectLbssLabelconfigById" parameterType="Integer" resultMap="LbssLabelconfigResult">
+        <include refid="selectLbssLabelconfigVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLbssLabelconfig" parameterType="LbssLabelconfig">
+        insert into lbss_labelconfig
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="timeCycle != null">timeCycle,</if>
+            <if test="timeCycleMax != null">timeCycleMax,</if>
+            <if test="timeCycleStep != null">timeCycleStep,</if>
+            <if test="adFrequency != null">adFrequency,</if>
+            <if test="timeCnt != null">timeCnt,</if>
+            <if test="coeff != null">coeff,</if>
+            <if test="adCoeffStdMin != null">adCoeffStdMin,</if>
+            <if test="threshold != null">threshold,</if>
+            <if test="adCount != null">adCount,</if>
+            <if test="accuracy != null">accuracy,</if>
+            <if test="updateTime != null">updateTime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="timeCycle != null">#{timeCycle},</if>
+            <if test="timeCycleMax != null">#{timeCycleMax},</if>
+            <if test="timeCycleStep != null">#{timeCycleStep},</if>
+            <if test="adFrequency != null">#{adFrequency},</if>
+            <if test="timeCnt != null">#{timeCnt},</if>
+            <if test="coeff != null">#{coeff},</if>
+            <if test="adCoeffStdMin != null">#{adCoeffStdMin},</if>
+            <if test="threshold != null">#{threshold},</if>
+            <if test="adCount != null">#{adCount},</if>
+            <if test="accuracy != null">#{accuracy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLbssLabelconfig" parameterType="LbssLabelconfig">
+        update lbss_labelconfig
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="timeCycle != null">timeCycle = #{timeCycle},</if>
+            <if test="timeCycleMax != null">timeCycleMax = #{timeCycleMax},</if>
+            <if test="timeCycleStep != null">timeCycleStep = #{timeCycleStep},</if>
+            <if test="adFrequency != null">adFrequency = #{adFrequency},</if>
+            <if test="timeCnt != null">timeCnt = #{timeCnt},</if>
+            <if test="coeff != null">coeff = #{coeff},</if>
+            <if test="adCoeffStdMin != null">adCoeffStdMin = #{adCoeffStdMin},</if>
+            <if test="threshold != null">threshold = #{threshold},</if>
+            <if test="adCount != null">adCount = #{adCount},</if>
+            <if test="accuracy != null">accuracy = #{accuracy},</if>
+            <if test="updateTime != null">updateTime = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLbssLabelconfigById" parameterType="Integer">
+        delete from lbss_labelconfig where id = #{id}
+    </delete>
+
+    <delete id="deleteLbssLabelconfigByIds" parameterType="String">
+        delete from lbss_labelconfig where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

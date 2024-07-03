@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/templates/lbss/css/BigData.css}" rel="stylesheet" />
+<link th:href="@{/templates/lbss/css/lbss.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+<title>激光皮带秤煤流监测平台</title>
+<style>
+.charts {
+	width: 100%;
+	height: 80%;
+}
+
+</style>
+</head>
+<body>
+	<div class="data_bodey" style="background-image: url(../lbss/img/background_flow.png)">
+		<div class="index_nav">
+			<div class="logo_img">
+				<div class="logo"></div>
+				<div class="logo_content">
+					<div style="width: 100%;height: 50%;">
+						<div class="company" id="company_name">红柳林矿业有限公司</div>
+					</div>
+					<div style="width: 100%;height: 40%;">
+						<div id=localtime class="nowtime"></div>
+					</div>
+				</div>
+			</div>
+			<div class="title">激光皮带秤煤流监测平台</div>
+			<div class="controller">
+				<ul class="nav navbar-top-links navbar-right welcome-message">
+	                <li class="dropdown user-menu">
+	                     <a href="javascript:void(0)" class="dropdown-toggle" data-hover="dropdown">
+	                         <span class="hidden-xs" style="font-size: 20px;">admin</span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+							 <li>
+								 <a href="/lbss/frontMain" target="_self"><i class="fa fa-key"></i> 汇总</a>
+							 </li>
+	                         <li>
+	                              <a href="/lbss/login" target="_self"><i class="fa fa-key"></i> 后台</a>
+	                         </li>
+							 <li>
+								 <a href="/lbss/login" target="_self"><i class="fa fa-key"></i> 注销</a>
+							 </li>
+	                        
+	                     </ul>
+	                 </li>
+            	</ul>
+			</div>
+		</div>
+		
+		<div class="index_tabs" style="width: 100%;">
+			<div style="height: 51%"></div>
+			<div style="height:6%">
+				<div style="width: 61%;height:100%; float: left"></div>
+				<div style="width: 1%;height:100%;float: left">
+					<div class="breathe-belt" ></div>
+				</div>
+				<div style="width: 7%;height:100%; float: left"></div>
+				<div style="width: 1%;height:100%;float: left">
+					<div class="breathe-belt" ></div>
+				</div>
+				<div style="width: 29%;height:100%;float: left"></div>
+			</div>
+			<div style="width: 100%;height: 9%">
+				<div style="width:58%;height: 100%;float: left;"></div>
+				<div style="width:7%;height: 100%;float: left;">
+					<div ><a href="#" id="name_6" target='_blank' style="width: 100%;float:left;color:#30ef0c">6号皮带秤</a></div>
+					<div name="info_6" id="info_6" style="width: 100%;float:left;color:#30ef0c">4m/s、3600t/h</div>
+				</div>
+				<div style="width:9%;height: 100%;float: left;">
+					<div > <a href="#" id="name_5" target='_blank' style="width: 100%;float:left;color:#30ef0c">5号皮带秤</a></div>
+					<div name="info_5" id="info_5" style="width: 100%;float:left;color:#30ef0c">5m/s、4000t/h</div>
+				</div>
+				<div style="width:20%;height: 100%;float: left;"></div>
+			</div>
+			<div style="height: 20%"></div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: echarts-js" />
+	<!-- 全局js -->
+	<script th:src="@{/templates/lbss/js/echarts.min.js}"></script>
+	<script th:src="@{/templates/lbss/js/public/times.js}"></script>
+	<script th:src="@{/templates/lbss/js/public/indexCom.js}"></script>
+	<script th:src="@{/templates/lbss/js/data/flowmain.js}"></script>
+	<script type="text/javascript">
+    //打开主界面
+    function openwin() {
+        window.location.href = "/lbss/login";
+    }
+    
+</script>
+</body>
+
+</html>

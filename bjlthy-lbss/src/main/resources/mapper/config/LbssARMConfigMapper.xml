@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.config.config.mapper.LbssARMConfigMapper">
+    
+    <resultMap type="LbssARMConfig" id="LbssARMConfigResult">
+        <result property="id"    column="id"    />
+        <result property="belt_name"    column="belt_name"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="value"    column="value"    />
+        <result property="unit"    column="unit"    />
+        <result property="type"    column="type"    />
+        <result property="status"    column="status"    />
+        <result property="updateTime"    column="updateTime"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectLbssARMConfigVo">
+        select id, belt_name,code, name, value, unit, type,status, updatetime, remark from lbss_armconfig
+    </sql>
+
+    <select id="selectLbssARMConfigList" parameterType="LbssARMConfig" resultMap="LbssARMConfigResult">
+        <include refid="selectLbssARMConfigVo"/>
+        <where>  
+            <if test="belt_name != null  and belt_name != ''"> and belt_name like concat('%', #{belt_name}, '%')</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectLbssARMConfigById" parameterType="Integer" resultMap="LbssARMConfigResult">
+        <include refid="selectLbssARMConfigVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLbssARMConfig" parameterType="LbssARMConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into lbss_armconfig
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="belt_name != null">belt_name,</if>
+            <if test="code != null">code,</if>
+            <if test="name != null">name,</if>
+            <if test="value != null">value,</if>
+            <if test="unit != null">unit,</if>
+            <if test="type != null">type,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+            updateTime
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="belt_name != null">#{belt_name},</if>
+            <if test="code != null">#{code},</if>
+            <if test="name != null">#{name},</if>
+            <if test="value != null">#{value},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="type != null">#{type},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+            sysdate()
+         </trim>
+    </insert>
+
+    <update id="updateLbssARMConfig" parameterType="LbssARMConfig">
+        update lbss_armconfig
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="belt_name != null">belt_name = #{belt_name},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="value != null">value = #{value},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            updateTime = sysdate()
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLbssARMConfigById" parameterType="Integer">
+        delete from lbss_armconfig where id = #{id}
+    </delete>
+
+    <delete id="deleteLbssARMConfigByIds" parameterType="String">
+        delete from lbss_armconfig where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

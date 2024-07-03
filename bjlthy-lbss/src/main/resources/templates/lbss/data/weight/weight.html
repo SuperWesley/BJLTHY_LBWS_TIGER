@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('日累计重量列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                             <li class="select-time">
+								<label style="font-size: 1.7rem;color: #000;">时间：</label>
+								<input type="text" class="form-control" id="startTime" placeholder="开始时间" name="params[startTime]" style="color: #000;width: 150px;"/>
+								<span>-</span>
+								<input type="text" class="form-control" id="endTime" placeholder="结束时间" name="params[endTime]" style="color: #000;width: 150px;"/>
+								<input type="text"  id="status" name="status" value="2" hidden="hidden"/>
+							</li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search();queryDatas();"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-sm-12 select-table table-striped">
+            	<div>
+					<font style="color:#000;float: left;font-size:1.5rem; width: 23%;margin-left: 14%">过煤重量合计:&nbsp;&nbsp;&nbsp;<span id="sumWeight"></span></font>
+					<font style="color:#000;float: left;font-size:1.5rem;width: 23%;">过煤体积合计:&nbsp;&nbsp;&nbsp;<span id="sumVolume"></span></font>
+				</div>
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-table-editable-js" />
+    
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('data:sumweight:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('data:sumweight:remove')}]];
+        var prefix = ctx + "lbss/data/sumweight";
+
+        $(function() {
+            var options = {
+                url: prefix + "/getDetailData",
+                updateUrl: prefix + "/edit/{id}",
+                modalName: "日累计重量",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '',
+                    visible: false
+                },
+                {
+                    field: 'day',
+                    title: '时间'
+                },
+                  {
+                    field: 'totalWeight',
+                    title: '总过煤重量',
+                },
+                
+                {
+                    field: 'totalVolume',
+                    title: '总过煤体积',
+                },
+              
+                {
+                    field: 'density',
+                    title: '密度'
+                },
+                {
+                    field: 'gangueRatio',
+                    title: '含矸率'
+                },
+                {
+                    field: 'week',
+                    title: '星期'
+                },
+                 {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        
+        function queryDatas(){
+			var startTime = $("#startTime").val();
+			var endTime = $("#endTime").val();
+			var status = $("#status").val();
+		    $.ajax({
+		        url: prefix + "/getTotalData", 
+		        type: "post",
+		        data: {"startTime": startTime, "endTime": endTime, "status": status},
+		        success: function (data) {
+		        	var sumWeight = data.sumWeight;
+		        	var sumVolume = data.sumVolume;
+		        	$("#sumWeight").html(sumWeight+" t");
+		        	$("#sumVolume").html(sumVolume+" (m<sup>3</sup>)");
+		        }
+		    });
+		    
+		}
+
+    </script>
+    <script type="text/javascript">
+    	layui.use('laydate', function(){
+			var laydate = layui.laydate;
+			//常规用法
+			var start = laydate.render({
+			    elem: '#startTime',
+				type: 'datetime',
+		        done: function(value, date,endDate){
+		           end.config.min = {
+                        year: date.year,
+                        month: date.month - 1,
+                        date: date.date,
+                        hours: date.hours,
+                        minutes: date.minutes,
+                        seconds: date.seconds
+                    }
+		        }
+			});
+			var end = laydate.render({
+			    elem: '#endTime',
+				type: 'datetime',
+			    done: function(value, date){
+		            start.config.max = {
+	    	            year: date.year,
+	    	            month: date.month - 1,
+	    	            date: date.date,
+	    	            hours: date.hours,
+	    	            minutes: date.minutes,
+	    	            seconds: date.seconds
+	    	        }
+			    }
+			});
+		})
+    </script>
+</body>
+</html>

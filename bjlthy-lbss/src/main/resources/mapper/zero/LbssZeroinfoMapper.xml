@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.zero.info.mapper.LbssZeroinfoMapper">
+    
+    <resultMap type="LbssZeroinfo" id="LbssZeroinfoResult">
+        <result property="id"    column="id"    />
+        <result property="belt_name"    column="belt_name"    />
+        <result property="time"    column="time"    />
+        <result property="zeronum"    column="zeronum"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
+        <result property="zeroValue"    column="zeroValue"    />
+    </resultMap>
+
+    <sql id="selectLbssZeroinfoVo">
+        select id, belt_name,time, zeronum, status, zeroValue,remark from lbss_zeroinfo
+    </sql>
+
+    <select id="selectLbssZeroinfoList" parameterType="LbssZeroinfo" resultMap="LbssZeroinfoResult">
+        <include refid="selectLbssZeroinfoVo"/>
+        <where>  
+            <if test="belt_name != null "> and belt_name like concat(#{belt_name}, '%')</if>
+            <if test="time != null "> and time like concat(#{time}, '%')</if>
+            <if test="zeronum != null "> and zeronum = #{zeronum}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+        order by time desc
+    </select>
+    
+    <select id="selectLbssZeroinfoById" parameterType="Integer" resultMap="LbssZeroinfoResult">
+        <include refid="selectLbssZeroinfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLbssZeroinfo" parameterType="LbssZeroinfo" useGeneratedKeys="true" keyProperty="id">
+        insert into lbss_zeroinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="belt_name != null">belt_name,</if>
+            <if test="time != null">time,</if>
+            <if test="zeronum != null">zeronum,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="zeroValue != null">zeroValue,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="belt_name != null">#{belt_name},</if>
+            <if test="time != null">#{time},</if>
+            <if test="zeronum != null">#{zeronum},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="zeroValue != null">#{zeroValue},</if>
+         </trim>
+    </insert>
+	
+	<!-- 查询最新的调零信息 -->
+	<select id="findNewestZeroInfo" resultMap="LbssZeroinfoResult">
+        SELECT a.id,b.belt_name,IFNULL(a.time,'') as time,IFNULL(a.remark,'') as remark FROM lbss_zeroinfo a RIGHT JOIN lbss_working b ON a.belt_name = b.belt_name
+        <where>
+            1=1
+            <if test="belt_name != null "> and b.belt_name = #{belt_name}</if>
+            and status = 0
+        </where>
+         order by id desc limit 1
+    </select>
+
+</mapper>

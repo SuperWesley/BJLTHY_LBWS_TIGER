@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>皮带秤煤量详细数据</title>
+	<link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{/js/plugins/bootstrap-3.4.1-dist/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/js/plugins/bootstrap-select-1.13.14/dist/css/bootstrap-select.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/templates/lbss/css/indexCom.css}" rel="stylesheet">
+    <link th:href="@{/templates/lbss/css/statis/BeltDetail.css}" rel="stylesheet" type="text/css">
+   
+</head>
+<body>
+<div class="container">
+    <div class="top">
+        <div class="top-left left">
+            <div class="logo left"></div>
+            <div class="company left">
+                <div class="company_place">
+                    <div class="sparkSet" id="company_name" style="font-size:2.2rem;color: #63CDFF;cursor:pointer;">红柳林矿业有限公司</div>
+                </div>
+                <div style="width: 100%;height: 50%;">
+                    <div id="localtime" style="font-size:1.8rem;"></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="top-middle left">
+            <div class="top-middle">
+            </div>
+            <div class="con-top">
+
+            </div>
+        </div>
+        <div class="top-middle2 left">
+            <div class="beltOrIronSet" style="cursor:pointer;" id="system_name">皮带秤煤量详细数据</div>
+        </div>
+        <div class="top-right left">
+            <div class="left" style="width: 100%;height: 100%;">
+            	<div class="left" style="width: 50%;height: 100%;margin-top: 2%;">
+                    <div class="col-sm-10">
+                        <select id="detail" class="selectpicker" data-width="180px" title="皮带秤煤量详细数据" onchange="queryDetailInfo();">
+                             <option value="实时">皮带秤实时数据</option>
+	                         <option value="皮带统计">皮带秤煤量统计数据</option>
+	                         <option value="皮带详细">皮带秤煤量详细数据</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="left" style="width: 30%;height: 100%;margin-top: 2%;">
+                    <div class="col-sm-10">
+                        <select id="manage" class="selectpicker" data-width="180px" title="管理" onchange="pageSwitch();">
+		                     <option value="后台">后台</option>
+		                     <option value="关闭">关闭</option>
+                        </select>
+                    </div>
+                </div>
+			
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="bottom">
+        <div class="bottom-top">
+            <div style="width: 54%;height: 100%;float: left;"></div>
+            <div style="width: 43%;height: 100%;float: left;">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <input type="hidden" th:value="${belt_name}" id="belt_name" name="belt_name"/>
+                            <input type="hidden" th:value="${belt_name_en}" id="belt_name_en" name="belt_name_en"/>
+                        </ul>
+                        <ul>
+                                <label style="font-size: 1.8rem;color: #A3CADE;width: 100px;">查询条件：</label>
+                                <select name="status" id="status" style="width: 60px;color: #fff;background: #091536;" onchange="changeTimeType()">
+                                    <option value="2" selected="selected">小时</option>
+                                    <option value="3" >日</option>
+                                    <option value="4" >月</option>
+                                    <option value="5" >年</option>
+                                </select>
+                                 &nbsp;
+                                  &nbsp;
+								<label style="font-size: 2.0rem;color: #A3CADE;">时间：</label>
+								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[startTime]" style="color: black;height: 30px;"/>
+								<span>-</span>
+								<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]" style="color: black;height: 30px;"/>
+                            &nbsp;
+                            <a class="btn btn-primary btn-sm" onclick="if(queryDatas()) $.table.search()"><i class="fa fa-search"></i> 查询</a>
+                            &nbsp;
+                            <a class="btn btn-warning btn-sm" id="excel"><i class="fa fa-download"></i> 导出</a>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="bottom-info">
+            <div class="text-left" id="heji">
+                <font style="color:#02f41f;float: left;font-size:1.7rem; width: 20%;margin-left: 2%">皮带过煤重量合计:&nbsp;&nbsp;&nbsp;<span id="sumWeight"></span></font>
+                <font style="color:#02f41f;float: left;font-size:1.7rem;width: 15%;">皮带过煤体积合计:&nbsp;&nbsp;&nbsp;<span id="sumVolume"></span></font>
+            </div>
+            <table id="bootstrap-table" data-mobile-responsive="true" style="color: #ffffff;"></table>
+        </div>
+    </div>
+
+</div>
+<th:block th:include="include :: footer"/>
+<!-- 全局js -->
+<script type="text/javascript" th:src="@{/js/plugins/bootstrap-select-1.13.14/dist/js/bootstrap-select.min.js}"></script>
+<script type="text/javascript" th:src="@{/ajax/libs/datapicker/bootstrap-datetimepicker.min.js}"></script>
+<script th:src="@{/templates/lbss/js/public/indexDetail.js}"></script>
+<script th:src="@{/templates/lbss/js/public/times.js}"></script>
+<script th:src="@{/templates/lbss/js/statis/BeltDetail.js}"></script>
+<script th:inline="javascript">
+	var prefix = ctx + "lbss/data/sumweightDay";
+    $(function () {
+        var options = {
+            url: prefix+"/getDetailData",
+            showFooter: true,
+            pageList :[10],
+            columns: [
+                [
+                    {title: "皮带机信息", align: "center", colspan: 7,width:'50%' },
+                ],
+                [
+                    {
+                        checkbox: true, width: '3%', align: "center"
+                    },
+                    {
+                        field: 'day', title: '日期', width: '3%', align: "center",
+                        footerFormatter: function () {
+                            return '合计:';
+                        }
+                    },
+                    {
+                        field: 'totalWeight', title: '总过煤重量(t)', width: '8%', align: "center",
+                        footerFormatter: function (value) {
+                            var count = 0;
+                            for (var i in value) {
+                                count += value[i].totalWeight;
+                            }
+                            return count.toFixed(2);
+                        }
+                    },
+                    {
+                        field: 'totalVolume', title: '总过煤体积(m<sup>3</sup>)', width: '8%', align: "center",
+                        footerFormatter: function (value) {
+                            var count = 0;
+                            for (var i in value) {
+                                count += value[i].totalVolume;
+                            }
+                            return count.toFixed(2);
+                        }
+                    },
+                    {
+                        field: 'density', title: '密度(t/m<sup>3</sup>)', width: '6%', align: "center",
+                    },
+                    {
+                        field: 'gangueRatio', title: '含矸率(%)', width: '6%', align: "center",
+                    },
+
+                    {field: 'week', title: '星期', width: '8%', align: "center"}
+                ]
+            ]
+        };
+        $.table.init(options);
+    });
+
+
+</script>
+<script type="text/javascript">
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        //常规用法
+        laydate.render({
+            elem: '#startTime',
+            type: 'datetime',
+            done: function () {
+                var startTime = new Date($('#startTime').val());
+                var endDate = new Date($('#endTime').val());
+                if (startTime != null) {
+                    if (endDate != null) {
+                        if (endDate < startTime) {
+                            layer.closeAll();
+                            layer.msg('结束时间不能小于开始时间');
+                            $("#startTime").val("");
+
+                        }
+                    }
+                }
+            }
+        });
+        laydate.render({
+            elem: '#endTime',
+            type: 'datetime',
+            done: function () {
+                var startTime = new Date($('#startTime').val());
+                var endDate = new Date($('#endTime').val());
+                if (startTime != null) {
+                    if (endDate != null) {
+                        if (endDate < startTime) {
+                            layer.closeAll();
+                            layer.msg('结束时间不能小于开始时间');
+                            $("#endTime").val("");
+
+                        }
+                    }
+                }
+            }
+        });
+    })
+
+//改变时间类型
+		function changeTimeType(){
+			var status = $("#status").val();
+			$("#startTime").val("");
+			$("#endTime").val("");
+			if(status == 2){//分秒、小时
+				renderStartDate("datetime","yyyy-MM-dd HH:mm:ss");
+				renderEndDate("datetime","yyyy-MM-dd HH:mm:ss");
+			}else if(status == 3){//日
+				renderStartDate("date","yyyy-MM-dd");
+				renderEndDate("date","yyyy-MM-dd");
+			}else if(status == 4){//月
+				renderStartDate("month","yyyy-MM");
+				renderEndDate("month","yyyy-MM");
+			}else if(status == 5){//年
+				renderStartDate("year","yyyy");
+				renderEndDate("year","yyyy");
+			}
+		}
+		
+		function renderStartDate(type,sdf) {
+		   var laydate = layui.laydate;
+			let param = {
+				elem: '#startTime',
+				type: type,
+				format:sdf,
+			}
+			// 如果元素已经绑定了事件，就不会重新绑定事件，不会刷新元素的option，所以每次重新绑定前将元素的eventHandler = false，就可以重新渲染了
+			$('#startTime')[0].eventHandler = false
+			laydate.render(param);
+		}
+		function renderEndDate(type,sdf) {
+		   var laydate = layui.laydate;
+			let param = {
+				elem: '#endTime',
+				type: type,
+				format:sdf,
+			}
+			// 如果元素已经绑定了事件，就不会重新绑定事件，不会刷新元素的option，所以每次重新绑定前将元素的eventHandler = false，就可以重新渲染了
+			$('#endTime')[0].eventHandler = false
+			laydate.render(param);
+		}
+</script>
+</body>
+</html>

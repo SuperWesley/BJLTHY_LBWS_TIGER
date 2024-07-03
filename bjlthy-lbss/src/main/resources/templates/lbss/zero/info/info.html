@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('调零信息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label style="width: 86px;">皮带秤名称：</label>
+                                <select name="belt_name" id="belt_name" th:with="type=${@dict.getType('belt_name')}" th:value="${belt_name}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>记录时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择记录时间" name="time"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        if (window.opener != null){
+            var name=$("#belt_name",window.opener.document).val();
+            if(name != null && name != ""){
+                $("#belt_name").val(name);
+            }
+        }
+        var datas = [[${@dict.getType('sys_common_status')}]];
+        var prefix = ctx + "zero/info";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                exportUrl: prefix + "/export",
+                modalName: "调零信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '',
+                    visible: false
+                },
+                {
+                    field: 'belt_name',
+                    title: '皮带秤名称'
+                },
+                {
+                    field: 'time',
+                    title: '记录时间'
+                },
+                {
+                    field: 'zeronum',
+                    title: '调零次数'
+                },
+                {
+                    field: 'status',
+                    title: '调零结果',
+                    formatter: function(value, item, index) {
+		            	return $.table.selectDictLabel(datas, item.status);
+		            }
+                },
+                {
+                    field: 'remark',
+                    title: '结果说明'
+                },
+                {
+                    field: 'zeroValue',
+                    title: '零点值'
+                }
+                ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

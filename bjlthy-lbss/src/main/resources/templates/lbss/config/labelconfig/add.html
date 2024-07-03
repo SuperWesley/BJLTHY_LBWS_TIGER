@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增标签配置')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-labelconfig-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">计算周期，单位秒：</label>
+                <div class="col-sm-8">
+                    <input name="timeCycle" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">计算周期最大值：</label>
+                <div class="col-sm-8">
+                    <input name="timeCycleMax" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">周期步长：</label>
+                <div class="col-sm-8">
+                    <input name="timeCycleStep" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">AD频率：</label>
+                <div class="col-sm-8">
+                    <input name="adFrequency" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">运动与静止状态数据时间限制，单位分：</label>
+                <div class="col-sm-8">
+                    <input name="timeCnt" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">系数：</label>
+                <div class="col-sm-8">
+                    <input name="coeff" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">AD标准差系数最小值：</label>
+                <div class="col-sm-8">
+                    <input name="adCoeffStdMin" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">阈值：</label>
+                <div class="col-sm-8">
+                    <input name="threshold" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">皮带秤ad路数：</label>
+                <div class="col-sm-8">
+                    <input name="adCount" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">阈值准确度：</label>
+                <div class="col-sm-8">
+                    <input name="accuracy" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "lbss/config/labelconfig"
+        $("#form-labelconfig-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-labelconfig-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

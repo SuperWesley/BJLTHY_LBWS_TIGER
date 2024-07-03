@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.config.config.mapper.LbssVersionMapper">
+    
+    <resultMap type="LbssVersion" id="LbssVersionResult">
+        <result property="id"    column="id"    />
+        <result property="version"    column="version"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectLbssVersionVo">
+        select id, version, update_time, remark from lbss_version
+    </sql>
+
+
+    <select id="selectLbssVersionById" parameterType="Integer" resultMap="LbssVersionResult">
+        <include refid="selectLbssVersionVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectLbssVersionList" parameterType="LbssVersion" resultMap="LbssVersionResult">
+        <include refid="selectLbssVersionVo"/>
+        <where>
+            <if test="version != null  and version != ''"> and version like concat('%', #{version}, '%')</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectNewVersion" parameterType="Integer" resultMap="LbssVersionResult">
+       select id,version,update_time from lbss_version order by id desc limit 1
+    </select>
+
+    <insert id="insertLbssVersion" parameterType="LbssVersion">
+        insert into lbss_version
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="version != null">version,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="version != null">#{version},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLbssVersion" parameterType="LbssVersion">
+        update lbss_version
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="version != null">version = #{version},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLbssVersionById" parameterType="Integer">
+        delete from lbss_version where id = #{id}
+    </delete>
+
+    <delete id="deleteLbssVersionByIds" parameterType="String">
+        delete from lbss_version where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

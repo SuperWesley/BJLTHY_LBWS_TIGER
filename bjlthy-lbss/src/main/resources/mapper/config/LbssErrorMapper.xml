@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.config.errorcode.mapper.LbssErrorMapper">
+    
+    <resultMap type="LbssError" id="CoalErrorResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="code"    column="code"    />
+        <result property="type"    column="type"    />
+        <result property="tips"    column="tips"    />
+        <result property="description"    column="description"    />
+        <result property="solution"    column="solution"    />
+    </resultMap>
+
+    <sql id="selectCoalErrorVo">
+        select id, name, code, type, tips, description, solution from lbss_error
+    </sql>
+
+    <select id="selectCoalErrorList" parameterType="LbssError" resultMap="CoalErrorResult">
+        <include refid="selectCoalErrorVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="tips != null  and tips != ''"> and tips = #{tips}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="solution != null  and solution != ''"> and solution = #{solution}</if>
+        </where>
+    </select>
+    
+    <select id="selectCoalErrorById" parameterType="Long" resultMap="CoalErrorResult">
+        <include refid="selectCoalErrorVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCoalError" parameterType="LbssError" useGeneratedKeys="true" keyProperty="id">
+        insert into lbss_error
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="code != null">code,</if>
+            <if test="type != null">type,</if>
+            <if test="tips != null">tips,</if>
+            <if test="description != null">description,</if>
+            <if test="solution != null">solution,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="code != null">#{code},</if>
+            <if test="type != null">#{type},</if>
+            <if test="tips != null">#{tips},</if>
+            <if test="description != null">#{description},</if>
+            <if test="solution != null">#{solution},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCoalError" parameterType="LbssError">
+        update lbss_error
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="tips != null">tips = #{tips},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="solution != null">solution = #{solution},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCoalErrorById" parameterType="Long">
+        delete from lbss_error where id = #{id}
+    </delete>
+
+    <delete id="deleteCoalErrorByIds" parameterType="String">
+        delete from lbss_error where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

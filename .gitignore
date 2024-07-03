@@ -1,0 +1,8 @@
+# Project exclude paths
+/bjlthy-admin/target/
+/bjlthy-common/target/
+/bjlthy-framework/target/
+/bjlthy-generator/target/
+/bjlthy-lbss/target/
+/bjlthy-quartz/target/
+/bjlthy-system/target/

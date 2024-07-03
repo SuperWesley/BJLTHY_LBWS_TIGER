@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('数据对比列表')" />
+    <th:block th:include="include :: bootstrap-editable-css" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                          	<li class="select-time">
+									<label style="font-size: 2.0rem;color: #A3CADE;">时间：</label>
+									<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[startTime]" style="color: #fff"/>
+									<span>-</span>
+									<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]" style="color: #fff"/>
+							</li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="data:compare:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="data:compare:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-table-editable-js" />
+    
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('data:compare:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('data:compare:remove')}]];
+        var prefix = ctx + "data/compare";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                striped:true,
+                showSearch: false,
+		        showRefresh: false,
+		        showToggle: false,
+		        showColumns: false,
+		        showPageGo: true,
+                onEditableSave: onEditableSave,
+                modalName: "数据对比",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '',
+                    visible: false
+                },
+                
+                {
+                    field: 'day',
+                    title: '日期'
+                },
+                {
+                    field: 'length',
+                    title: '工作面长度',
+                },
+                {
+                    field: 'sumHeight',
+                    title: '总采高',
+                    visible: false
+                },
+                {
+                    field: 'height',
+                    title: '采高',
+                },
+                {
+                    field: 'footage',
+                    title: '一刀进尺',
+                },
+                {
+                    field: 'cutNum',
+                    title: '切割刀数',
+                    editable : {
+						type : 'text',
+						title : '切割刀数',
+						emptytext : "【刀数】为空",
+						validate : function(value) {
+							if (isNaN(value)) {
+								return '输入的信息必须为数字';
+							}
+							if (value.length == 0) {
+								return '名称不能为空';
+							}
+						}
+					},
+                },
+                {
+                    field: 'density',
+                    title: '平均密度',
+                },
+                {
+                    field: 'afterCoalWeight',
+                    title: '偏帮和后溜煤量',
+                    cellStyle:formatTableUnit,
+                    formatter:paramsMatter  
+                },
+                {
+                    field: 'moisture',
+                    title: '水分量',
+                    cellStyle:formatTableUnit,
+                    formatter:paramsMatter  
+                },
+                {
+                    field: 'ashContent',
+                    title: '灰分量',
+                    cellStyle:formatTableUnit,
+                    formatter:paramsMatter  
+                },
+                {
+                    field: 'recovery_ratio',
+                    title: '采出率',
+                },
+                {
+                    field: 'coal_ratio',
+                    title: '放煤率',
+                },
+                {
+                    field: 'kuangSumweight',
+                    title: '矿总重量',
+					cellStyle:formatTableUnit,
+                    formatter:paramsMatter                    
+                },
+                {
+                    field: 'beltSumweight',
+                    title: '皮带秤总重量'
+                },
+                {
+                    field: 'beltSumvolume',
+                    title: '皮带秤总体积'
+                },
+                {
+                    field: 'beltDensity',
+                    title: '皮带秤密度'
+                },
+                {
+                    field: 'lidarSumweight',
+                    title: '雷达计算总重量'
+                },
+                {
+                    field: 'difference',
+                    title: '相差值'
+                },
+                {
+                    field: 'differenceRatio',
+                    title: '相差比例'
+                },
+                {
+                    field: 'remark',
+                    title: '备注',
+                    formatter: function(value, row, index) {
+                    	if(value=="正常"){
+                    		return '<b style="color:#0cdd0c">'+value+'</b>'
+                    	}else{
+                    		return '<b style="color:#db0a0a">'+value+'</b>'
+                    	}
+                    }
+                    
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        function onEditableSave (field, row, rowIndex, oldValue, $el) {
+        	alert("当前值：" + row[field]  + "，旧值：" + oldValue);
+            $.operate.save(prefix + "/edit", row);
+        }
+        
+		function paramsMatter(value,row,index,field) { 
+		    var span=document.createElement('span');
+		    var msg = "";
+		    if(field == "kuangSumweight"){
+			    msg = "矿总重量 = 工作面长度*采高*每刀进尺*切割刀数*平均密度*矿采出率+偏帮和后溜的煤量+水分量+灰分量";
+		    }else if(field == "afterCoalWeight"){
+		    	msg = "偏帮和后溜的煤量 = 工作面长度*(总采高-采高)*每刀进尺*切割刀数*平均密度*放煤率";
+		    }else if(field == "moisture"){
+		    	msg = "水分量 = 工作面长度*采高*每刀进尺*切割刀数*平均密度*水分比例";
+		    }else if(field == "ashContent"){
+		    	msg = "灰分量 = 工作面长度*采高*每刀进尺*切割刀数*平均密度*灰分比例";
+		    }
+		    span.setAttribute('title',msg);
+		    span.innerHTML = value;
+		    return span.outerHTML;
+		}
+		function formatTableUnit(value, row, index) { 
+		    return { 
+			    css: { 
+			        "white-space": 'nowrap',
+			        "text-overflow": 'ellipsis',
+			        "overflow": 'hidden'
+			    }
+			}
+		}
+		
+    </script>
+</body>
+</html>

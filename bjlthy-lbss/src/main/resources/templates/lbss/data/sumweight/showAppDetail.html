@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+    <head>
+        <meta charset="UTF-8">
+        <title>红柳林主井激光皮带秤</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/templates/lbss/css/app/lbssappdetail.css}" rel="stylesheet" />
+  		<link th:href="@{/css/laydate.css}" rel="stylesheet" />
+        <link href="iTunesArtwork@2x.png" sizes="114x114" rel="apple-touch-icon-precomposed">
+        <style type="text/css">
+	        a {
+			    color: #ef3308;
+			}
+	    </style>
+    </head>
+    <body onLoad= "javascript:window.resizeTo(screen.availWidth,screen.availHeight);window.moveTo(0,0) ">
+        <section class="jq22-flexView jq22-head-bj-one">
+            <header class="jq22-navBar jq22-navBar-fixed jq22-navBar-chang">
+            	<a href="javascript:void(0);" onclick="go_back();" class="jq22-navBar-item">
+                    <i class="icon icon-return"></i>
+                </a>
+                <div class="jq22-center">
+                    <span class="jq22-center-title">红柳林主井激光皮带秤</span>
+                </div>
+                <a href="javascript:void(0);" class="jq22-navBar-item">
+                    <i class="icon "></i>
+                </a>
+            </header>
+            <section class="jq22-scrollView">
+                <div class="jq22-palace">
+                	<div style="width: 100%;height: 90%;">
+	                    <div class="time_div">
+		                    <span style="color: #00a4f1;font-size: 0.9rem;margin-top: 51px">时间：</span>
+		                    <input type="text" class="time-input" placeholder="开始时间" id="startTime" name="startTime" style="color: black;height: 23px;width: 90px;"/>
+		                    <span>-</span>
+							<input type="text" class="time-input" placeholder="结束时间" id="endTime" name="endTime" style="color: black;height: 23px;width: 90px;"/>
+		                </div>
+		                
+                	</div>
+                </div>
+                <div class="jq22-palace">
+                	<div style="width: 100%;height: 90%;">
+	                	<div style="width: 100%;height: 100%;">
+		                    <div class="btn btn-primary" onclick="showScraperStatis(this,'S')">班统计</div>
+		                    <div class="btn btn-primary" onclick="showScraperStatis(this,'D')">日统计</div>
+		                    <div class="btn btn-primary" onclick="showScraperStatis(this,'W')">周统计</div>
+		                    <div class="btn btn-primary" onclick="showScraperStatis(this,'M')">月统计</div>
+		                    <div class="btn btn-primary" onclick="showScraperStatis(this,'Y')">年统计</div>
+		                </div>
+	                </div>
+                </div>
+                <div class="divHeight"></div>
+                <div class="jq22-flex">
+                    <div class="jq22-flex-box">
+                        <h2>汇总数据</h2>
+                    </div>
+                </div>
+                <div class="jq22-total-box">
+                	<table id="totalTab" class="histable" width="100%" style="table-layout:fixed; border:1px solid #0094ff;">
+                		<thead>
+	                        <tr>
+	                            <th>日 期</th>
+	                            <th>总重量(t)</th>
+	                            <th>总体积(m<sup>3</sup>)</th>
+	                            <th>密度(t/m<sup>3</sup>)</th>
+	                            <th>含矸率(%)</th>
+	                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                	</table>
+                </div>
+                <div class="divHeight"></div>
+                <div class="jq22-flex">
+                    <div class="jq22-flex-box">
+                        <h2>详细数据</h2>
+                    </div>
+                </div>
+                <div class="jq22-data-box">
+                	<table id="dataTab" class="histable" width="100%" style="table-layout:fixed; border:1px solid #0094ff;">
+                        <thead>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+        
+		<!-- 全局js -->
+		<script th:src="@{/templates/lbss/js/jquery.min.js}"></script>
+		<script th:src="@{/ajax/libs/layui/layui.js}"></script>
+        <script th:src="@{/templates/lbss/js/app/dateUtil.js}"></script>
+        <script th:src="@{/templates/lbss/js/app/appdetail.js}"></script>
+        
+        <script type="text/javascript">
+        	function go_back() {
+        	
+			    if(window.history.length > 1){
+	                window.history.go(-1);
+	            }else{
+	                window.location.href = "/lbss/login";
+	            }
+			}
+        </script>
+    </body>
+</html>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.data.sumweight.mapper.LbssSumWeightHourMapper">
+
+    <resultMap type="LbssSumWeightHour" id="LbssSumWeightHourResult">
+        <result property="id"    column="id"    />
+        <result property="belt_name"    column="belt_name"    />
+        <result property="day"    column="day"    />
+        <result property="totalVolume"    column="total_volume"    />
+        <result property="totalWeight"    column="total_weight"    />
+        <result property="density"    column="density"    />
+        <result property="gangueRatio"    column="gangueRatio"    />
+        <result property="week"    column="week"    />
+        <result property="remark"    column="remark"    />
+        <result property="updateTime"    column="updateTime"    />
+    </resultMap>
+
+    <resultMap type="LbssSumWeightDay" id="LbssSumWeightDayResult">
+        <result property="id"    column="id"    />
+        <result property="belt_name"    column="belt_name"    />
+        <result property="day"    column="day"    />
+        <result property="totalVolume"    column="total_volume"    />
+        <result property="totalWeight"    column="total_weight"    />
+        <result property="density"    column="density"    />
+        <result property="gangueRatio"    column="gangueRatio"    />
+        <result property="week"    column="week"    />
+        <result property="remark"    column="remark"    />
+        <result property="updateTime"    column="updateTime"    />
+    </resultMap>
+
+    <sql id="selectLbssSumWeightHourVo">
+        select id, belt_name,day, total_volume, total_weight, density, gangueRatio, week,remark from lbss_sumweight_hour
+    </sql>
+
+    <select id="selectLbssSumweightList" parameterType="LbssSumWeightHour" resultMap="LbssSumWeightHourResult">
+        <include refid="selectLbssSumWeightHourVo"/>
+        <where>
+            <if test="belt_name != null  and belt_name != ''"> and belt_name = #{belt_name}</if>
+            <if test="day != null  and day != ''"> and day = #{day}</if>
+            <if test="totalVolume != null "> and total_volume = #{totalVolume}</if>
+            <if test="totalWeight != null "> and total_weight = #{totalWeight}</if>
+            <if test="density != null "> and density = #{density}</if>
+            <if test="gangueRatio != null "> and gangueRatio = #{gangueRatio}</if>
+            <if test="week != null  and week != ''"> and week = #{week}</if>
+            <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
+        </where>
+    </select>
+
+    <select id="selectLbssSumWeightById" parameterType="Integer" resultMap="LbssSumWeightHourResult">
+        <include refid="selectLbssSumWeightHourVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertLbssSumweight" parameterType="LbssSumWeightHour" useGeneratedKeys="true" keyProperty="id">
+        insert into lbss_sumweight_hour
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="belt_name != null">belt_name,</if>
+            <if test="day != null">day,</if>
+            <if test="totalVolume != null">total_volume,</if>
+            <if test="totalWeight != null">total_weight,</if>
+            <if test="density != null">density,</if>
+            <if test="gangueRatio != null">gangueRatio,</if>
+            <if test="week != null">week,</if>
+            <if test="remark != null">remark,</if>
+            updateTime
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="belt_name != null">#{belt_name},</if>
+            <if test="day != null">#{day},</if>
+            <if test="totalVolume != null">#{totalVolume},</if>
+            <if test="totalWeight != null">#{totalWeight},</if>
+            <if test="density != null">#{density},</if>
+            <if test="gangueRatio != null">#{gangueRatio},</if>
+            <if test="week != null">#{week},</if>
+            <if test="remark != null">#{remark},</if>
+            sysdate()
+        </trim>
+    </insert>
+
+    <update id="updateLbssSumweight" parameterType="LbssSumWeightHour">
+        update lbss_sumweight_hour
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="belt_name != null">belt_name = #{belt_name},</if>
+            <if test="day != null">day = #{day},</if>
+            <if test="totalVolume != null">total_volume = #{totalVolume},</if>
+            <if test="totalWeight != null">total_weight = #{totalWeight},</if>
+            <if test="density != null">density = #{density},</if>
+            <if test="gangueRatio != null">gangueRatio = #{gangueRatio},</if>
+            <if test="week != null">week = #{week},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            updateTime = sysdate()
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLbssSumWeightById" parameterType="Integer">
+        delete from lbss_sumweight_hour where id = #{id}
+    </delete>
+
+    <delete id="deleteLbssSumWeightByIds" parameterType="String">
+        delete from lbss_sumweight_hour where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 查询每月的煤量信息 -->
+    <select id="findMonthWeight" parameterType="String" resultType="Double">
+        select ifnull(sum(total_weight),0) monthweigth from lbss_sumweight_hour
+        <where>
+        	<if test="param1 != null and param1 != ''"><!-- 皮带秤名称 -->
+                 belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 开始时间检索 -->
+                and day &gt;= #{param2}
+            </if>
+            <if test="param3 != null and param3 != ''"><!-- 结束时间检索 -->
+                and day &lt; #{param3}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询每年的煤量信息 -->
+    <select id="findYearWeight" parameterType="String" resultType="Double">
+        select ifnull(sum(total_weight),0) yearweigth from lbss_sumweight_hour
+        <where>
+         	<if test="param1 != null and param1 != ''"><!-- 皮带秤名称 -->
+                 belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 开始时间检索 -->
+               and day &gt;= #{param2}
+            </if>
+            <if test="param3 != null and param3 != ''"><!-- 结束时间检索 -->
+                and day &lt; #{param3}
+            </if>
+           
+        </where>
+    </select>
+
+    <!-- 根据时间查询煤量详细信息 -->
+    <select id="queryWeightInfo" parameterType="String" resultMap="LbssSumWeightHourResult">
+        select belt_name,ifnull(sum(total_weight),0) total_weight,ifnull(sum(total_volume),0) total_volume from lbss_sumweight_hour
+        <where>
+        	<if test="param1 != null and param1 != ''"><!-- 皮带秤名称检索 -->
+                 belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 开始时间检索 -->
+                and day &gt;= #{param2}
+            </if>
+            <if test="param3 != null and param3 != ''"><!-- 结束时间检索 -->
+                and day &lt; #{param3}
+            </if>
+            
+        </where>
+    </select>
+
+
+    <!-- 模糊查询每小时的煤量信息 -->
+    <select id="queryDetailDataLikeHour" parameterType="String" resultMap="LbssSumWeightHourResult">
+        <include refid="selectLbssSumWeightHourVo"/>
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 皮带秤名称检索 -->
+                belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''">
+                and day like '${param2}%'
+            </if>
+        </where>
+    </select>
+
+    <!-- 汇总每班次的煤量信息 -->
+    <select id="queryShiftWeightInfo" parameterType="String" resultMap="LbssSumWeightHourResult">
+        select belt_name,ifnull(sum(total_weight),0) total_weight,ifnull(sum(total_volume),0) total_volume ,avg(gangueRatio) gangueRatio from lbss_sumweight_hour
+        <where>
+        	 <if test="param1 != null and param1 != ''"><!-- 工作面信息检索 -->
+                 belt_name = #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 开始时间检索 -->
+                and day &gt;= #{param2}
+            </if>
+            <if test="param3 != null and param3 != ''"><!-- 结束时间检索 -->
+                and day &lt; #{param3}
+            </if>
+            group by date_format(day ,'%Y-%m-%d' )
+        </where>
+    </select>
+
+    <!-- 汇总每班次的煤量信息 -->
+    <select id="queryShiftWeightInfo2" parameterType="String" resultMap="LbssSumWeightHourResult">
+        select belt_name,date_format(day ,'%Y-%m-%d' ) day,ifnull(sum(total_weight),0) total_weight,ifnull(sum(total_volume),0) total_volume  from lbss_sumweight_hour
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 开始时间检索 -->
+                day &gt;= #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 结束时间检索 -->
+                and day &lt; #{param2}
+            </if>
+
+            group by belt_name,date_format(day ,'%Y-%m-%d' )
+        </where>
+    </select>
+
+    <!-- 根据时间段查询每天的煤量信息 -->
+    <select id="findHourWeightInfoByTime" parameterType="LbssSumWeightHour" resultMap="LbssSumWeightDayResult">
+        <include refid="selectLbssSumWeightHourVo"/>
+        <where>
+
+            <if test="belt_name != null  and belt_name != ''">  belt_name = #{belt_name}</if>
+            <if test="startTime != null and startTime != ''"><!-- 开始时间检索 -->
+               and day &gt;= #{startTime}
+            </if>
+            <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
+                and day &lt; #{endTime}
+            </if>
+            order by day asc
+        </where>
+    </select>
+
+    <!-- 查询每日的煤量信息 -->
+    <select id="selectDayWeightInfo" parameterType="String" resultMap="LbssSumWeightHourResult">
+        select date_format(day ,'%Y-%m-%d' ) day,ifnull(sum(total_weight),0) total_weight,ifnull(sum(total_volume),0) total_volume ,week from lbss_sumweight_hour
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 开始时间检索 -->
+                day &gt;= #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 结束时间检索 -->
+                and day &lt; #{param2}
+            </if>
+
+            group by date_format(day ,'%Y-%m-%d' )
+        </where>
+    </select>
+
+    <!-- 汇总每日的煤量信息 -->
+    <select id="queryDayWeightInfo" parameterType="String" resultMap="LbssSumWeightHourResult">
+        select date_format(day ,'%Y-%m-%d' ) day,ifnull(sum(total_weight),0) total_weight,ifnull(sum(total_volume),0) total_volume ,avg(density) density,avg(gangueRatio) gangueRatio,week from lbss_sumweight_hour
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 开始时间检索 -->
+                day &gt;= #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 结束时间检索 -->
+                and day &lt; #{param2}
+            </if>
+
+            group by date_format(day ,'%Y-%m-%d' )
+        </where>
+    </select>
+
+    <!-- 汇总每月的煤量信息 -->
+    <select id="queryMonthWeightInfo" parameterType="String" resultMap="LbssSumWeightHourResult">
+        SELECT date_format(day ,'%Y-%m-%d' ) day,ifnull(sum(total_weight),0) total_weight,ifnull(sum(total_volume),0) total_volume ,avg(density) density,avg(gangueRatio) gangueRatio,week from lbss_sumweight_hour
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 开始时间检索 -->
+                day like '${param1}%'
+            </if>
+            group by date_format(day ,'%Y-%m-%d' )
+        </where>
+    </select>
+
+    <!-- 汇总每年的煤量信息 -->
+    <select id="queryYearWeightInfo" parameterType="String" resultMap="LbssSumWeightHourResult">
+        select date_format(day ,'%Y-%m' ) day,ifnull(sum(total_weight),0) total_weight,ifnull(sum(total_volume),0) total_volume ,avg(density) density,avg(gangueRatio) gangueRatio,'--'week from lbss_sumweight_hour
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 开始时间检索 -->
+                day like '${param1}%'  group by date_format(day ,'%Y-%m' )
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询每小时的详细统计煤量信息 -->
+    <select id="queryDetailDataByTime" parameterType="String" resultMap="LbssSumWeightHourResult">
+        <include refid="selectLbssSumWeightHourVo"/>
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 开始时间检索 -->
+                day &gt;= #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 结束时间检索 -->
+                and day &lt; #{param2}
+            </if>
+        </where>
+    </select>
+
+
+
+
+    <!-- 根据时间段查询每月的煤量信息 -->
+    <select id="queryMonthWeightInfoByTime" parameterType="String" resultMap="LbssSumWeightHourResult">
+        select date_format(day ,'%Y-%m' ) day,ifnull(sum(total_weight),0.00) total_weight,ifnull(sum(total_volume),0.00) total_volume ,'--'week from lbss_sumweight_hour
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 开始时间检索 -->
+                day &gt;= #{param1}
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 结束时间检索 -->
+                and day &lt; #{param2}
+            </if>
+            group by date_format(day ,'%Y-%m' )
+            order by day asc
+        </where>
+    </select>
+
+    <!-- 根据时间段查询每年的煤量信息 -->
+    <select id="queryYearWeightInfoByTime" parameterType="String" resultMap="LbssSumWeightHourResult">
+        select date_format(day ,'%Y' ) day,ifnull(sum(total_weight),0.00) total_weight,ifnull(sum(total_volume),0.00) total_volume ,'--'week from lbss_sumweight_hour
+        <where>
+            <if test="param1 != null and param1 != ''"><!-- 开始时间检索 -->
+                date_format(day,'%y%m%d %H%i%S') &gt;= date_format(#{param1},'%y%m%d %H%i%S')
+            </if>
+            <if test="param2 != null and param2 != ''"><!-- 结束时间检索 -->
+                and date_format(day,'%y%m%d %H%i%S') &lt; date_format(#{param2},'%y%m%d %H%i%S')
+            </if>
+            group by date_format(day ,'%Y' )
+            order by day asc
+        </where>
+    </select>
+</mapper>

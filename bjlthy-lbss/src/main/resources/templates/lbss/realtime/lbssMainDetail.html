@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link th:href="@{/templates/lbss/css/showstyle.css}" rel="stylesheet" />
+	<link th:href="@{/css/laydate.css}" rel="stylesheet" />
+	<th:block th:include="include :: header('激光皮带秤详细统计	')" />
+	<style type="text/css">
+		.bootstrap-table .fixed-table-container .table thead th {
+			background-color: transparent;
+		}
+
+		.bootstrap-table .fixed-table-pagination>.pagination-detail .pagination-info
+		{
+			color: #fff;
+		}
+
+		.table-hover>tbody>tr:hover {
+			background-color: #397fac;
+		}
+
+		.select-list .select-time input {
+			width: 153px;
+		}
+
+		.th-inner {
+			font-size: 1.8rem;
+		}
+
+		.table>tbody>tr>td {
+			padding: 7px;
+			font-size: 1.6rem;
+		}
+
+	</style>
+</head>
+<body>
+<div class="data">
+	<div style="width: 100%;height: 100%;">
+		<div class="data-top">
+			<div class="logo">
+				<div class="logo_img"></div>
+				<div class="logo_content">
+					<div style="width: 100%;height: 50%;">
+						<div class="company" id="company_name">红柳林矿业有限公司</div>
+					</div>
+					<div style="width: 100%;height: 40%;">
+						<div id=localtime class="nowtime"></div>
+					</div>
+				</div>
+			</div>
+			<div class="total_info">
+			</div>
+			<div class="title">激光皮带秤详细统计</div>
+			<div class="controller">
+				<div class="admin">
+				</div>
+				<div class="goback">
+					<div class="admin_off"></div>
+					<input type="button" value="关闭本页" class="goback_text" onclick="custom_close()"/>
+				</div>
+			</div>
+		</div>
+		<div class="con-bottom">
+			<div style="width: 35%;height: 100%;float: left;"></div>
+			<div style="width: 65%;height: 100%;float: left;margin-top: 1%;">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								<label style="font-size: 2.0rem;color: #A3CADE;width: 122px;margin-top:0%;">皮带秤名称：</label>
+								<select name="belt_name" id="belt_name" th:with="type=${@dict.getType('belt_name')}" style="width: 170px;color: #fff;background: #091536;">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+								</select>
+							</li>
+							<li>
+								<label style="font-size: 2.0rem;color: #A3CADE;width: 100px;margin-top:0%;">条件选择：</label>
+								<select name="status" id="status" style="width: 70px;color: #fff;background: #091536;" onchange="changeTimeType()">
+									<option value="2" selected="selected">小时</option>
+									<option value="3" >日</option>
+									<option value="4" >月</option>
+									<option value="5" >年</option>
+								</select>
+
+
+							</li>
+							<li class="select-time">
+								<label style="font-size: 2.0rem;color: #A3CADE;margin-top:0%;">时间：</label>
+								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[startTime]" style="color: #fff"/>
+								<span>-</span>
+								<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]" style="color: #fff"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-sm"  id="searchInfo" onclick="if(queryDatas()) $.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-sm"  onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+								<a class="btn btn-warning btn-sm" id="excel">
+									<i class="fa fa-download"></i> 导出详细
+								</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="data-bottom">
+			<div class="con-datil">
+				<div class="text-left" id="heji">
+					<font style="color:#02f41f;float: left;font-size:1.7rem; width: 20%;margin-left: 2%">皮带过煤重量合计:&nbsp;&nbsp;&nbsp;<span id="sumWeight"></span></font>
+					<font style="color:#02f41f;float: left;font-size:1.7rem;width: 15%;">皮带过煤体积合计:&nbsp;&nbsp;&nbsp;<span id="sumVolume"></span></font>
+				</div>
+				</table>
+				<table id="bootstrap-table" data-mobile-responsive="true"
+					   style="color: #ffffff;"></table>
+			</div>
+		</div>
+	</div>
+</div>
+<th:block th:include="include :: footer" />
+
+<!-- 全局js -->
+<script th:src="@{/templates/lbss/js/public/times.js}"></script>
+<script th:src="@{/templates/lbss/js/public/indexMain.js}"></script>
+<script th:src="@{/templates/lbss/js/total/mainDetail.js}"></script>
+
+<script th:inline="javascript">
+	var prefix = ctx + "lbss/data/allBelt";
+	$(function() {
+		var options = {
+			url: prefix + "/getDetailData",
+			showFooter: true,
+			pageList:[10],
+			columns: [
+				[
+					{title:"各皮带信息汇总",align: "center",colspan:8,styler: function (value, row, index) {
+							return 'background-color:green';
+						}},
+
+				],
+				[
+					{
+						checkbox: true,width:'5%',align:"center"
+					},
+					{ field: 'id',title: '', visible: false},
+					{ field: 'belt_name',title: '皮带秤名称',width:'8%',align:"center",
+						footerFormatter: function () {
+							return '合计:';
+						}
+					},
+					{ field: 'day',title: '日期',width:'8%',align:"center"},
+					{ field: 'totalWeight',title: '总过煤重量(t)',width:'8%',align:"center",
+						footerFormatter: function (value) {
+							var count = 0;
+							for (var i in value) {
+								count += value[i].totalWeight;
+							}
+							return count.toFixed(2);
+						}
+					},
+					{ field: 'totalVolume', title: '总过煤体积(m<sup>3</sup>)',width:'8%',align:"center",
+						footerFormatter: function (value) {
+							var count = 0;
+							for (var i in value) {
+								count += value[i].totalVolume;
+							}
+							return count.toFixed(2);
+						}
+					},
+					{ field: 'density',title: '密度(t/m<sup>3</sup>)',width:'6%',align:"center"},
+					{ field: 'gangueRatio',title: '含矸率(%)',width:'6%',align:"center"},
+				]
+			],
+
+		};
+		$.table.init(options);
+	});
+
+</script>
+
+<script type="text/javascript">
+	layui.use('laydate', function(){
+		var laydate = layui.laydate;
+		//常规用法
+		var start = laydate.render({
+			elem: '#startTime',
+			type: 'datetime',
+			ready: function(date){//控件在打开时触发，回调返回一个参数
+				$("#startTime").val("");
+			},
+			done: function(value, date,endDate){
+				end.config.min = {
+					year: date.year,
+					month: date.month - 1,
+					date: date.date,
+					hours: date.hours,
+					minutes: date.minutes,
+					seconds: date.seconds
+				}
+			}
+		});
+		var end = laydate.render({
+			elem: '#endTime',
+			type: 'datetime',
+			ready: function(date){//控件在打开时触发，回调返回一个参数
+				$("#endTime").val("");
+			},
+			done: function(value, date){
+				start.config.max = {
+					year: date.year,
+					month: date.month - 1,
+					date: date.date,
+					hours: date.hours,
+					minutes: date.minutes,
+					seconds: date.seconds
+				}
+			}
+		});
+	})
+	//关闭本页
+	function custom_close(){
+		window.opener=null;
+		window.open('','_self');
+		window.close();
+	}
+	//改变时间类型
+	function changeTimeType(){
+		var status = $("#status").val();
+		var startTime = $("#startTime").val();
+		var endTime = $("#endTime").val();
+		if(status == 1 || status == 2){//分秒、小时
+			renderStartDate(startTime,"datetime","yyyy-MM-dd HH:mm:ss");
+			renderEndDate(endTime,"datetime","yyyy-MM-dd HH:mm:ss");
+		}else if(status == 3){//日
+			renderStartDate(startTime,"date","yyyy-MM-dd");
+			renderEndDate(endTime,"date","yyyy-MM-dd");
+		}else if(status == 4){//月
+			renderStartDate(startTime,"month","yyyy-MM");
+			renderEndDate(endTime,"month","yyyy-MM");
+		}else if(status == 5){//年
+			renderStartDate(startTime,"year","yyyy");
+			renderEndDate(endTime,"year","yyyy");
+		}
+		if(status == 1){
+			$("#heji").hide();
+		}else{
+			$("#heji").show();
+		}
+	}
+
+	function renderStartDate(value, type,sdf) {
+		var laydate = layui.laydate;
+		let param = {
+			elem: '#startTime',
+			type: type,
+			format:sdf,
+		}
+		// 如果元素已经绑定了事件，就不会重新绑定事件，不会刷新元素的option，所以每次重新绑定前将元素的eventHandler = false，就可以重新渲染了
+		$('#startTime')[0].eventHandler = false
+		laydate.render(param);
+	}
+	function renderEndDate(value, type,sdf) {
+		var laydate = layui.laydate;
+		let param = {
+			elem: '#endTime',
+			type: type,
+			format:sdf,
+		}
+		// 如果元素已经绑定了事件，就不会重新绑定事件，不会刷新元素的option，所以每次重新绑定前将元素的eventHandler = false，就可以重新渲染了
+		$('#endTime')[0].eventHandler = false
+		laydate.render(param);
+	}
+</script>
+</body>
+</html>

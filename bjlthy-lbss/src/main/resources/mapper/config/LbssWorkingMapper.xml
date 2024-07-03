@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjlthy.lbss.config.config.mapper.LbssWorkingMapper">
+    
+    <resultMap type="LbssWorking" id="LbssWorkingResult">
+        <result property="id"    column="id"    />
+        <result property="working_area"    column="working_area"    />
+        <result property="belt_name"    column="belt_name"    />
+        <result property="belt_name_en"    column="belt_name_en"    />
+        <result property="belt_ip"    column="belt_ip"    />
+    </resultMap>
+
+    <sql id="selectLbssWorkingVo">
+        select id, working_area, belt_name,belt_name_en, belt_ip from lbss_working
+    </sql>
+
+    <select id="selectLbssWorkingList" parameterType="LbssWorking" resultMap="LbssWorkingResult">
+        <include refid="selectLbssWorkingVo"/>
+        <where>  
+            <if test="workingArea != null  and workingArea != ''"> and working_area = #{workingArea}</if>
+            <if test="belt_name != null  and belt_name != ''"> and belt_name like concat('%', #{belt_name}, '%')</if>
+            <if test="belt_name_en != null  and belt_name_en != ''"> and belt_name_en like concat('%', #{belt_name_en}, '%')</if>
+            <if test="belt_ip != null  and belt_ip != ''"> and belt_ip = #{belt_ip}</if>
+        </where>
+    </select>
+
+    <select id="selectLbssWorkingNotALLList" parameterType="LbssWorking" resultMap="LbssWorkingResult">
+        <include refid="selectLbssWorkingVo"/>
+        <where>
+            1 = 1
+            <if test="workingArea != null  and workingArea != ''"> and working_area = #{workingArea}</if>
+            <if test="belt_name != null  and belt_name != ''"> and belt_name like concat('%', #{belt_name}, '%')</if>
+            <if test="belt_name_en != null  and belt_name_en != ''"> and belt_name_en like concat('%', #{belt_name_en}, '%')</if>
+            <if test="belt_ip != null  and belt_ip != ''"> and belt_ip = #{belt_ip}</if>
+            and working_area != 'ALL'
+        </where>
+    </select>
+    
+    <select id="selectLbssWorkingById" parameterType="Long" resultMap="LbssWorkingResult">
+        <include refid="selectLbssWorkingVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertLbssWorking" parameterType="LbssWorking" useGeneratedKeys="true" keyProperty="id">
+        insert into lbss_working
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="workingArea != null">working_area,</if>
+            <if test="belt_name != null">belt_name,</if>
+            <if test="belt_name_en != null">belt_name_en,</if>
+            <if test="belt_ip != null">belt_ip,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="workingArea != null">#{workingArea},</if>
+            <if test="belt_name != null">#{belt_name},</if>
+            <if test="belt_name_en != null">#{belt_name_en},</if>
+            <if test="belt_ip != null">#{belt_ip},</if>
+         </trim>
+    </insert>
+
+    <update id="updateLbssWorking" parameterType="LbssWorking">
+        update lbss_working
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="workingArea != null">working_area = #{workingArea},</if>
+            <if test="belt_name != null">belt_name = #{belt_name},</if>
+            <if test="belt_name_en != null">belt_name_en = #{belt_name_en},</if>
+            <if test="belt_ip != null">belt_ip = #{belt_ip},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLbssWorkingById" parameterType="Long">
+        delete from lbss_working where id = #{id}
+    </delete>
+
+    <delete id="deleteLbssWorkingByIds" parameterType="String">
+        delete from lbss_working where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
